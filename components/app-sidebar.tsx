@@ -43,6 +43,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const data = {
   user: {
@@ -122,43 +123,62 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const pathname = usePathname()
+
+
   return (
     <Sidebar variant="inset" className="modern-sidebar" {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
+
+      <SidebarHeader  >
+        <SidebarMenu >
+          <SidebarMenuItem className="bg-[#0d416b] text-white hover:opacity-90 transition-all duration-300 rounded-xl shadow-lg">
             <SidebarMenuButton
               size="lg"
               asChild
-              className="glass-header text-white hover:opacity-90 transition-all duration-300 rounded-xl shadow-lg"
+              className="text-white hover:opacity-90 transition-all duration-300 rounded-xl shadow-lg"
             >
-              <Link href="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-accent to-brand-primary text-white shadow-inner">
-                  <Shield className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold text-white drop-shadow-sm">EDI Portal</span>
-                  <span className="truncate text-xs text-white/80 drop-shadow-sm">Transaction Management</span>
-                </div>
+              <Link href="/" className="flex items-center justify-center w-full h-full">
+                <img
+                  src="/Miracle-White-Logo.png"
+                  alt="EDI Portal"
+                  className="h-10 w-auto object-contain"
+                />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-brand-muted">Platform</SidebarGroupLabel>
           <SidebarMenu>
             {data.navMain.map((item) => (
-              <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
+              <Collapsible
+                key={item.title}
+                asChild
+                defaultOpen={item.items.some(subItem => pathname === subItem.url)}
+                className="group/collapsible"
+              >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="hover:bg-transparent data-[state=open]:bg-transparent"
+                      className={`
+                        hover:bg-brand-subtle/50 
+                        ${item.items.some(subItem => pathname === subItem.url)
+                          ? 'text-brand-primary'
+                          : 'text-brand-muted'}
+                      `}
                     >
-                      {item.icon && <item.icon className="text-brand-muted" />}
-                      <span className="text-brand-black font-medium">{item.title}</span>
+                      {item.icon && <item.icon className="currentColor" />}
+                      <span className={`font-medium ${item.items.some(subItem => pathname === subItem.url)
+                          ? 'text-brand-primary'
+                          : 'text-brand-black'
+                        }`}>
+                        {item.title}
+                      </span>
                       {item.items?.length && (
                         <div className="ml-auto transition-transform duration-300 group-data-[state=open]/collapsible:rotate-90">
                           <svg
@@ -167,7 +187,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             height="12"
                             viewBox="0 0 12 12"
                             fill="none"
-                            className="text-brand-muted"
+                            className={`
+                              ${item.items.some(subItem => pathname === subItem.url)
+                                ? 'text-brand-primary'
+                                : 'text-brand-muted'}
+                            `}
                           >
                             <path
                               d="M4.5 3L7.5 6L4.5 9"
@@ -187,14 +211,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton
                             asChild
-                            isActive={subItem.isActive}
-                            className={
-                              subItem.isActive
-                                ? "bg-gradient-to-r from-brand-accent/20 to-brand-primary/10 text-brand-primary font-semibold shadow-md border-l-3 border-brand-accent ml-2 rounded-lg"
-                                : "hover:bg-brand-subtle/50 hover:text-brand-primary ml-2 rounded-lg transition-all duration-200"
-                            }
+                            className={`
+                              ml-2 rounded-lg transition-all duration-200
+                              ${pathname === subItem.url
+                                ? "bg-gradient-to-r from-brand-accent/20 to-brand-primary/10 text-brand-primary font-semibold shadow-md border-l-3 border-brand-accent"
+                                : "hover:bg-brand-subtle/50 hover:text-brand-primary text-brand-black"
+                              }
+                            `}
                           >
                             <Link href={subItem.url}>
+                              {subItem.icon && (
+                                <subItem.icon className="h-4 w-4 mr-2 currentColor" />
+                              )}
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -208,6 +236,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>

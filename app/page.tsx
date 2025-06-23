@@ -153,7 +153,7 @@ const chartConfig = {
 
 export default function Dashboard() {
   return (
-    <SidebarInset>
+    <SidebarInset className="bg-[#ffffff]">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-white border-b border-brand-light">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1 text-brand-muted hover:text-brand-primary" />
@@ -184,7 +184,7 @@ export default function Dashboard() {
         {/* Header Section */}
         <div className="flex items-center justify-between pt-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-brand-black bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold text-black tracking-tight text-brand-black bg-gradient-to-r from-brand-primary to-brand-accent bg-clip-text text-transparent" style={{color:"black"}}>
               EDI Transaction Dashboard
             </h1>
             <p className="text-brand-muted mt-2">Real-time monitoring and analytics for your EDI transactions</p>
@@ -249,26 +249,24 @@ export default function Dashboard() {
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-brand-muted">{stat.title}</CardTitle>
                 <div
-                  className={`p-2 rounded-lg ${
-                    stat.color === "primary"
+                  className={`p-2 rounded-lg ${stat.color === "primary"
                       ? "bg-brand-primary/10"
                       : stat.color === "success"
                         ? "bg-brand-primary/10"
                         : stat.color === "error"
                           ? "bg-brand-error/10"
                           : "bg-brand-accent/10"
-                  }`}
+                    }`}
                 >
                   <stat.icon
-                    className={`h-4 w-4 ${
-                      stat.color === "primary"
+                    className={`h-4 w-4 ${stat.color === "primary"
                         ? "text-brand-primary"
                         : stat.color === "success"
                           ? "text-brand-primary"
                           : stat.color === "error"
                             ? "text-brand-error"
                             : "text-brand-accent"
-                    }`}
+                      }`}
                   />
                 </div>
               </CardHeader>
@@ -276,9 +274,8 @@ export default function Dashboard() {
                 <div className="text-2xl font-bold text-brand-black mb-1">{stat.value}</div>
                 <div className="flex items-center justify-between">
                   <p
-                    className={`text-xs flex items-center ${
-                      stat.trend === "up" ? "text-brand-primary" : "text-brand-error"
-                    }`}
+                    className={`text-xs flex items-center ${stat.trend === "up" ? "text-brand-primary" : "text-brand-error"
+                      }`}
                   >
                     {stat.trend === "up" ? (
                       <ArrowUpRight className="h-3 w-3 mr-1" />
@@ -295,34 +292,33 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="modern-card p-1 bg-white/80 backdrop-blur-sm border border-brand-light/30">
+        <Tabs defaultValue="overview" className="space-y-6" >
+          <TabsList className="modern-card p-1 bg-[#2368a0] backdrop-blur-sm border border-brand-light/30">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
+              className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
             >
               <BarChart3 className="h-4 w-4 mr-2" />
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="performance"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
+              className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
             >
               <Zap className="h-4 w-4 mr-2" />
               Performance
             </TabsTrigger>
             <TabsTrigger
               value="partners"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
+              className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
             >
               <Building2 className="h-4 w-4 mr-2" />
               Partners
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6 animate-slide-in-up">
+          <TabsContent value="overview" className="space-y-6 animate-slide-in-up"  >
             <div className="grid gap-6 lg:grid-cols-3">
-              {/* Transaction Volume Chart */}
               <Card className="modern-card lg:col-span-2">
                 <CardHeader className="modern-card-header">
                   <div className="flex items-center justify-between">
@@ -404,13 +400,12 @@ export default function Dashboard() {
                         className="flex items-center space-x-4 p-3 rounded-lg bg-white/50 backdrop-blur-sm border border-brand-light/30 hover:shadow-md transition-all duration-200"
                       >
                         <div
-                          className={`w-2 h-2 rounded-full ${
-                            transaction.status === "success"
+                          className={`w-2 h-2 rounded-full ${transaction.status === "success"
                               ? "bg-brand-primary"
                               : transaction.status === "pending"
                                 ? "bg-brand-accent"
                                 : "bg-brand-error"
-                          } animate-pulse`}
+                            } animate-pulse`}
                         ></div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-brand-black truncate">{transaction.partner}</p>
@@ -428,13 +423,12 @@ export default function Dashboard() {
                                   ? "secondary"
                                   : "destructive"
                             }
-                            className={`text-xs ${
-                              transaction.status === "success"
+                            className={`text-xs ${transaction.status === "success"
                                 ? "badge-brand-primary"
                                 : transaction.status === "pending"
                                   ? "badge-brand-accent"
                                   : "badge-brand-error"
-                            }`}
+                              }`}
                           >
                             {transaction.status}
                           </Badge>
@@ -491,22 +485,20 @@ export default function Dashboard() {
                         className="flex items-start space-x-3 p-3 rounded-lg bg-white/50 backdrop-blur-sm border border-brand-light/30"
                       >
                         <div
-                          className={`p-1 rounded-full ${
-                            alert.type === "error"
+                          className={`p-1 rounded-full ${alert.type === "error"
                               ? "bg-brand-error/10"
                               : alert.type === "warning"
                                 ? "bg-brand-accent/10"
                                 : "bg-brand-primary/10"
-                          }`}
+                            }`}
                         >
                           <AlertTriangle
-                            className={`h-3 w-3 ${
-                              alert.type === "error"
+                            className={`h-3 w-3 ${alert.type === "error"
                                 ? "text-brand-error"
                                 : alert.type === "warning"
                                   ? "text-brand-accent"
                                   : "text-brand-primary"
-                            }`}
+                              }`}
                           />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -522,7 +514,7 @@ export default function Dashboard() {
             </div>
           </TabsContent>
 
-          <TabsContent value="performance" className="space-y-6 animate-slide-in-up">
+          <TabsContent value="performance" className="space-y-6 animate-slide-in-up ">
             <Card className="modern-card">
               <CardHeader className="modern-card-header">
                 <CardTitle className="text-brand-black font-semibold">System Performance Metrics</CardTitle>
@@ -610,13 +602,12 @@ export default function Dashboard() {
                       >
                         <div className="flex items-center space-x-3">
                           <div
-                            className={`w-3 h-3 rounded-full ${
-                              partner.status === "Connected"
+                            className={`w-3 h-3 rounded-full ${partner.status === "Connected"
                                 ? "bg-brand-primary"
                                 : partner.status === "Warning"
                                   ? "bg-brand-error"
                                   : "bg-brand-accent"
-                            } animate-pulse`}
+                              } animate-pulse`}
                           ></div>
                           <div>
                             <p className="text-sm font-medium text-brand-black">{partner.name}</p>
@@ -634,13 +625,12 @@ export default function Dashboard() {
                                   ? "destructive"
                                   : "secondary"
                             }
-                            className={`text-xs mb-1 ${
-                              partner.status === "Connected"
+                            className={`text-xs mb-1 ${partner.status === "Connected"
                                 ? "badge-brand-primary"
                                 : partner.status === "Warning"
                                   ? "badge-brand-error"
                                   : "badge-brand-accent"
-                            }`}
+                              }`}
                           >
                             {partner.status}
                           </Badge>

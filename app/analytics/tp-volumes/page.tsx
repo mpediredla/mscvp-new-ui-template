@@ -15,12 +15,19 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Download, Filter, TrendingUp, TrendingDown, AlertTriangle } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Line, LineChart } from "recharts"
 import { Progress } from "@/components/ui/progress"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
+import { useState } from "react"
+
 
 const tpVolumeData = [
   {
@@ -148,6 +155,40 @@ const chartConfig = {
 }
 
 export default function TPVolumes() {
+
+  const [dateRange, setDateRange] = useState("30days");
+  const [partnerFilter, setPartnerFilter] = useState("all");
+  const [slaFilter, setSlaFilter] = useState("all");
+
+  const dateRangeOptions = [
+    { value: "7days", label: "Last 7 days" },
+    { value: "30days", label: "Last 30 days" },
+    { value: "90days", label: "Last 90 days" },
+    { value: "6months", label: "Last 6 months" },
+    { value: "1year", label: "Last year" },
+  ];
+
+  const partnerOptions = [
+    { value: "all", label: "All Partners" },
+    { value: "walmart", label: "Walmart" },
+    { value: "amazon", label: "Amazon" },
+    { value: "target", label: "Target" },
+    { value: "costco", label: "Costco" },
+    { value: "homedepot", label: "Home Depot" },
+  ];
+
+  const slaOptions = [
+    { value: "all", label: "All" },
+    { value: "excellent", label: "Excellent (>98%)" },
+    { value: "good", label: "Good (95-98%)" },
+    { value: "warning", label: "Warning (<95%)" },
+  ];
+
+  const getSelectedLabel = (options: any[], value: string) => {
+    return options.find(option => option.value === value)?.label || "";
+  };
+
+
   return (
     <SidebarInset>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-white border-b border-brand-light">
@@ -201,37 +242,52 @@ export default function TPVolumes() {
                 <Label htmlFor="date-range" className="text-brand-black">
                   Date Range
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="Last 30 days" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="7days">Last 7 days</SelectItem>
-                    <SelectItem value="30days">Last 30 days</SelectItem>
-                    <SelectItem value="90days">Last 90 days</SelectItem>
-                    <SelectItem value="6months">Last 6 months</SelectItem>
-                    <SelectItem value="1year">Last year</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {getSelectedLabel(dateRangeOptions, dateRange)}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-[200px]">
+                    {dateRangeOptions.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        className={`${dateRange === option.value ? 'bg-brand-accent text-white' : ''}`}
+                        onClick={() => setDateRange(option.value)}
+                      >
+                        {option.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="partner-filter" className="text-brand-black">
                   Partner
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All Partners" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All Partners</SelectItem>
-                    <SelectItem value="walmart">Walmart</SelectItem>
-                    <SelectItem value="amazon">Amazon</SelectItem>
-                    <SelectItem value="target">Target</SelectItem>
-                    <SelectItem value="costco">Costco</SelectItem>
-                    <SelectItem value="homedepot">Home Depot</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {getSelectedLabel(partnerOptions, partnerFilter)}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-[200px]">
+                    {partnerOptions.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        className={`${partnerFilter === option.value ? 'bg-brand-accent text-white' : ''}`}
+                        onClick={() => setPartnerFilter(option.value)}
+                      >
+                        {option.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
+
               <div className="space-y-2">
                 <Label htmlFor="volume-threshold" className="text-brand-black">
                   Min Volume
@@ -247,18 +303,27 @@ export default function TPVolumes() {
                 <Label htmlFor="sla-filter" className="text-brand-black">
                   SLA Status
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="excellent">Excellent ({">"}98%)</SelectItem>
-                    <SelectItem value="good">Good (95-98%)</SelectItem>
-                    <SelectItem value="warning">Warning ({"<"}95%)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {getSelectedLabel(slaOptions, slaFilter)}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-[200px]">
+                    {slaOptions.map((option) => (
+                      <DropdownMenuItem
+                        key={option.value}
+                        className={`${slaFilter === option.value ? 'bg-brand-accent text-white' : ''}`}
+                        onClick={() => setSlaFilter(option.value)}
+                      >
+                        {option.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
               <div className="space-y-2">
                 <Label className="text-brand-black">&nbsp;</Label>
                 <Button className="btn-primary w-full">

@@ -26,6 +26,7 @@ import {
   File,
   FileSpreadsheet,
   FileImage,
+  Check,
 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
@@ -36,6 +37,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Label } from "@/components/ui/label"
+import React from "react"
 
 const documentsData = [
   {
@@ -116,6 +119,12 @@ const getFileIcon = (type: string) => {
 }
 
 export default function DocumentRepository() {
+
+  const [selectedPartner, setSelectedPartner] = React.useState("Category")
+  const partners = ["All Categories", "Technical Documentation", "Operational", "Reference", "Legal"]
+  const [fileType, setFileType] = React.useState("File Type")
+  const files = ["All Types", "PDF", "Excel", "Word", "Image"]
+
   return (
     <SidebarInset>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-white border-b border-brand-light">
@@ -155,30 +164,67 @@ export default function DocumentRepository() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-muted h-4 w-4" />
             <Input placeholder="Search documents..." className="pl-10 border-brand-light focus-brand" />
           </div>
-          <Select>
-            <SelectTrigger className="w-[180px] border-brand-light focus-brand">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border-brand-light">
-              <SelectItem value="all">All Categories</SelectItem>
-              <SelectItem value="technical">Technical Documentation</SelectItem>
-              <SelectItem value="operational">Operational</SelectItem>
-              <SelectItem value="reference">Reference</SelectItem>
-              <SelectItem value="legal">Legal</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select>
-            <SelectTrigger className="w-[140px] border-brand-light focus-brand">
-              <SelectValue placeholder="File Type" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border-brand-light">
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="pdf">PDF</SelectItem>
-              <SelectItem value="excel">Excel</SelectItem>
-              <SelectItem value="word">Word</SelectItem>
-              <SelectItem value="image">Image</SelectItem>
-            </SelectContent>
-          </Select>
+
+          <div className="space-y-2">
+            {/* <Label htmlFor="partner" className="text-brand-black">
+                  Partner
+                </Label> */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                {selectedPartner}
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-[200px] border-brand-light">
+                {partners.map((partner) => (
+                  <DropdownMenuItem
+                    key={partner}
+                    className={`${selectedPartner === partner ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                    onClick={() => setSelectedPartner(partner)}
+                  >
+                    <span className="flex items-center">
+                      {selectedPartner === partner && (
+                        <Check className="h-4 w-4 mr-2" />
+                      )}
+                      {partner}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <div className="space-y-2">
+            {/* <Label htmlFor="partner" className="text-brand-black">
+                  Partner
+                </Label> */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                {fileType}
+                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-[200px] border-brand-light">
+                {files.map((file) => (
+                  <DropdownMenuItem
+                    key={file}
+                    className={`${fileType === file ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                    onClick={() => setFileType(file)}
+                  >
+                    <span className="flex items-center">
+                      {fileType === file && (
+                        <Check className="h-4 w-4 mr-2" />
+                      )}
+                      {file}
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
         </div>
 
         <div className="grid gap-6 md:grid-cols-4">

@@ -269,12 +269,12 @@
 }
 
 .table-brand thead tr:hover {
-  background-color: #8c8c8c;
+  background-color: #ffffff;
 }
 
 .table-brand thead th:hover {
-  background-color: #8c8c8c;
-  color: #ffffff;
+  /* background-color: #8c8c8c; */
+  color: #232527;
 }
 
 .table-brand tbody tr:hover {
@@ -884,7 +884,7 @@
 
 /* Fix Tab Triggers - Remove Yellow Colors */
 [data-state="active"] {
-  background-color: #2368a0 !important;
+  /* background-color: #2368a0 !important; */
   color: #ffffff !important;
   border-color: #2368a0 !important;
 }

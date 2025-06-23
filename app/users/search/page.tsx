@@ -31,6 +31,7 @@ import {
   UserCheck,
   Filter,
   Download,
+  Check,
 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
@@ -43,6 +44,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Checkbox } from "@/components/ui/checkbox"
+import React from "react"
+import path from "path"
 
 const usersData = [
   {
@@ -159,6 +162,12 @@ const getRoleIcon = (role: string) => {
 }
 
 export default function UserSearch() {
+
+  const [selectedRole, setSelectedRole] = React.useState<string | null>("All Roles");
+  const [selectedStatus, setSelectedStatus] = React.useState<string | null>("All Status");
+  const [selectedDepartment, setSelectedDepartment] = React.useState<string | null>("All Departments");
+  const [selectedMfa, setSelectedMfa] = React.useState<string | null>("All");
+
   return (
     <SidebarInset>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-white border-b border-brand-light">
@@ -225,67 +234,123 @@ export default function UserSearch() {
                 <Label htmlFor="role-filter" className="text-brand-black">
                   Role
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All Roles" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All Roles</SelectItem>
-                    <SelectItem value="admin">System Administrator</SelectItem>
-                    <SelectItem value="analyst">EDI Analyst</SelectItem>
-                    <SelectItem value="operator">Operator</SelectItem>
-                    <SelectItem value="viewer">Read-Only Viewer</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {selectedRole || "All Roles"}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full border-brand-light">
+                    {["All Roles", "System Administrator", "EDI Analyst", "Operator", "Read-Only Viewer"].map((role) => (
+                      <DropdownMenuItem
+                        key={role}
+                        className={`${selectedRole === role ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedRole(role === "All Roles" ? null : role)}
+                      >
+                        <span className="flex items-center">
+                          {selectedRole === role && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          {role}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
+
               <div className="space-y-2">
                 <Label htmlFor="status-filter" className="text-brand-black">
                   Status
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All Status" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All Status</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="locked">Locked</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {selectedStatus || "All Status"}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full border-brand-light">
+                    {["All Status", "Active", "Inactive", "Locked"].map((status) => (
+                      <DropdownMenuItem
+                        key={status}
+                        className={`${selectedStatus === status ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedStatus(status === "All Status" ? null : status)}
+                      >
+                        <span className="flex items-center">
+                          {selectedStatus === status && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          {status}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="department-filter" className="text-brand-black">
                   Department
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All Departments" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All Departments</SelectItem>
-                    <SelectItem value="it">IT Department</SelectItem>
-                    <SelectItem value="operations">Operations</SelectItem>
-                    <SelectItem value="finance">Finance</SelectItem>
-                    <SelectItem value="logistics">Logistics</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {selectedDepartment || "All Departments"}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full border-brand-light">
+                    {["All Departments", "IT Department", "Operations", "Finance", "Logistics"].map((dept) => (
+                      <DropdownMenuItem
+                        key={dept}
+                        className={`${selectedDepartment === dept ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedDepartment(dept === "All Departments" ? null : dept)}
+                      >
+                        <span className="flex items-center">
+                          {selectedDepartment === dept && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          {dept}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="mfa-filter" className="text-brand-black">
                   MFA Status
                 </Label>
-                <Select>
-                  <SelectTrigger className="border-brand-light focus-brand">
-                    <SelectValue placeholder="All" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-brand-light">
-                    <SelectItem value="all">All</SelectItem>
-                    <SelectItem value="enabled">MFA Enabled</SelectItem>
-                    <SelectItem value="disabled">MFA Disabled</SelectItem>
-                  </SelectContent>
-                </Select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                    {selectedMfa || "All"}
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full border-brand-light">
+                    {["All", "MFA Enabled", "MFA Disabled"].map((mfa) => (
+                      <DropdownMenuItem
+                        key={mfa}
+                        className={`${selectedMfa === mfa ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedMfa(mfa === "All" ? null : mfa)}
+                      >
+                        <span className="flex items-center">
+                          {selectedMfa === mfa && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          {mfa}
+                        </span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+
               <div className="space-y-2">
                 <Label className="text-brand-black">&nbsp;</Label>
                 <Button className="w-full btn-primary">
