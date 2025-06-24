@@ -27,6 +27,8 @@ import {
   FileSpreadsheet,
   FileImage,
   Check,
+  Filter,
+  ChevronDown,
 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
@@ -38,7 +40,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
-import React from "react"
+import React, { useState } from "react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const documentsData = [
   {
@@ -118,12 +121,228 @@ const getFileIcon = (type: string) => {
   }
 }
 
+const statuses = ["All Status", "Successful", "Failed", "Pending"]
+const dateRanges = [
+  "Last Day(24 hours)",
+  "Last Week(7 days)",
+  "Last 7 Days",
+  "Last month(30 Days)",
+  "Date Range"
+];
+
+const partners = [
+  { code: "02787", name: "ADUSA" },
+  { code: "ADUSA123", name: "ADUSA" },
+  { code: "311135B2BT", name: "AMC" },
+  { code: "311135B2BI", name: "AMC_PROD" },
+  { code: "ANZCO", name: "ANZCO" },
+  { code: "ARLAPROD", name: "Arla Foods" }
+];
+
+const wmsOptions = [
+  "Agro_RP",
+  "AGRORP",
+  "ALPHA",
+  "AWMS",
+  "HJ",
+  "HL_GB",
+  "INFOR",
+  "JDA",
+  "KARAT",
+  "MAERSK",
+  "MANH",
+  "REDPRAIRIE",
+  "SAP",
+  "TMS",
+  "WMS1"
+];
+
+const documentTypes = [
+  "94",
+  "1075",
+  "1077",
+  "1080",
+  "1081"
+];
+
+const apiStatusOptions = [
+  "ACCEPTED",
+  "200",
+  "404",
+  "403",
+  "REJECTED",
+  "ACCEPTED WITH ERRORS"
+];
+
+const correlationOptions = [
+  "Cheque Number",
+  "Customer Adjustment Number",
+  "Depositor Order Number",
+  "Direction",
+  "File name",
+  "GS Number"
+];
+
+const statusOptions = [
+  "SUCCESS",
+  "DROPPED",
+  "ERROR"
+];
+
 export default function DocumentRepository() {
 
-  const [selectedPartner, setSelectedPartner] = React.useState("Category")
-  const partners = ["All Categories", "Technical Documentation", "Operational", "Reference", "Legal"]
-  const [fileType, setFileType] = React.useState("File Type")
-  const files = ["All Types", "PDF", "Excel", "Word", "Image"]
+  const [selectedPartners, setSelectedPartners] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedWMS, setSelectedWMS] = useState<string[]>([]);
+  const [wmsSearchTerm, setWmsSearchTerm] = useState('');
+  const [isWmsOpen, setIsWmsOpen] = useState(false);
+  const [selectedDocType, setSelectedDocType] = useState("Select");
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [statusSearchTerm, setStatusSearchTerm] = useState('');
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [selectedDateRange, setSelectedDateRange] = useState("Select");
+  const [selectedApiStatuses, setSelectedApiStatuses] = useState<string[]>([]);
+  const [apiStatusSearchTerm, setApiStatusSearchTerm] = useState('');
+  const [isApiStatusOpen, setIsApiStatusOpen] = useState(false);
+  const [selectedCorrelation, setSelectedCorrelation] = useState("Select");
+  const [selectedStatus, setSelectedStatus] = useState("Select");
+
+
+  const filteredPartners = partners.filter(partner =>
+    partner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    partner.code.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Toggle partner selection
+  const togglePartner = (partnerCode: string) => {
+    setSelectedPartners(prev =>
+      prev.includes(partnerCode)
+        ? prev.filter(code => code !== partnerCode)
+        : [...prev, partnerCode]
+    );
+  };
+
+  // Toggle select all/none
+  const toggleSelectAll = () => {
+    if (selectedPartners.length === filteredPartners.length) {
+      setSelectedPartners([]);
+    } else {
+      const filteredCodes = filteredPartners.map(p => p.code);
+      setSelectedPartners(prev => [
+        ...new Set([...prev, ...filteredCodes])
+      ]);
+    }
+  };
+
+  // Display text for trigger
+  const getDisplayText = () => {
+    if (selectedPartners.length === 0) return "Select Trading Partner";
+
+    const selectedNames = selectedPartners.slice(0, 2).map(code => {
+      const partner = partners.find(p => p.code === code);
+      return `${partner?.name}(${code})`;
+    });
+
+    if (selectedPartners.length <= 2) {
+      return selectedNames.join(", ");
+    }
+    return `${selectedNames.join(", ")} +${selectedPartners.length - 2}`;
+  };
+
+  // Filter WMS based on search
+  const filteredWMS = wmsOptions.filter(wms =>
+    wms.toLowerCase().includes(wmsSearchTerm.toLowerCase())
+  );
+
+  // Toggle WMS selection
+  const toggleWMS = (wms: string) => {
+    setSelectedWMS(prev =>
+      prev.includes(wms)
+        ? prev.filter(item => item !== wms)
+        : [...prev, wms]
+    );
+  };
+
+  // Toggle select all/none for WMS
+  const toggleSelectAllWMS = () => {
+    if (selectedWMS.length === filteredWMS.length) {
+      setSelectedWMS([]);
+    } else {
+      setSelectedWMS(prev => [
+        ...new Set([...prev, ...filteredWMS])
+      ]);
+    }
+  };
+
+  // Display text for WMS trigger
+  const getWMSDisplayText = () => {
+    if (selectedWMS.length === 0) return "Select WMS";
+    if (selectedWMS.length === 1) return selectedWMS[0];
+    return `${selectedWMS.length} selected`;
+  };
+
+  const filteredStatuses = statusOptions.filter(status =>
+    status.toLowerCase().includes(statusSearchTerm.toLowerCase())
+  );
+
+  // Toggle status selection
+  const toggleStatus = (status: string) => {
+    setSelectedStatuses(prev =>
+      prev.includes(status)
+        ? prev.filter(item => item !== status)
+        : [...prev, status]
+    );
+  };
+
+  // Toggle select all/none for statuses
+  const toggleSelectAllStatuses = () => {
+    if (selectedStatuses.length === filteredStatuses.length) {
+      setSelectedStatuses([]);
+    } else {
+      setSelectedStatuses(prev => [
+        ...new Set([...prev, ...filteredStatuses])
+      ]);
+    }
+  };
+
+  // Display text for status trigger
+  const getStatusDisplayText = () => {
+    if (selectedStatuses.length === 0) return "Select Status";
+    if (selectedStatuses.length === 1) return selectedStatuses[0];
+    return `${selectedStatuses.length} selected`;
+  };
+
+  const filteredApiStatuses = apiStatusOptions.filter(status =>
+    status.toLowerCase().includes(apiStatusSearchTerm.toLowerCase())
+  );
+
+  // Toggle status selection
+  const toggleApiStatus = (status: string) => {
+    setSelectedApiStatuses(prev =>
+      prev.includes(status)
+        ? prev.filter(item => item !== status)
+        : [...prev, status]
+    );
+  };
+
+  // Toggle select all/none
+  const toggleSelectAllApiStatuses = () => {
+    if (selectedApiStatuses.length === filteredApiStatuses.length) {
+      setSelectedApiStatuses([]);
+    } else {
+      setSelectedApiStatuses(prev => [
+        ...new Set([...prev, ...filteredApiStatuses])
+      ]);
+    }
+  };
+
+  // Display text for trigger
+  const getApiStatusDisplayText = () => {
+    if (selectedApiStatuses.length === 0) return "Select Status";
+    if (selectedApiStatuses.length === 1) return selectedApiStatuses[0];
+    return `${selectedApiStatuses.length} selected`;
+  };
 
   return (
     <SidebarInset>
@@ -147,11 +366,10 @@ export default function DocumentRepository() {
         </div>
       </header>
 
-      <div className="flex flex-1 flex-col gap-6 p-6 pt-0 bg-brand-subtle">
+      <div className="flex flex-1 flex-col gap-6 p-6 pt-3 bg-brand-subtle">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-brand-black">Document Repository</h2>
-            <p className="text-brand-muted">Centralized storage for technical and operational documentation</p>
           </div>
           <Button className="btn-primary">
             <Upload className="h-4 w-4 mr-2" />
@@ -159,75 +377,429 @@ export default function DocumentRepository() {
           </Button>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-muted h-4 w-4" />
-            <Input placeholder="Search documents..." className="pl-10 border-brand-light focus-brand" />
-          </div>
+        <Card className="brand-card">
+          <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-3 px-6">
+            <CardTitle className="text-white">Database: @LIVE_ARCHIVE</CardTitle>
+          </CardHeader>
+          <CardContent className="pt-4">
+            <div className="grid gap-3">
+              {/* First Row - Date Filters */}
+              <div className="grid grid-cols-4 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Date Range</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                      {selectedDateRange}
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px] border-brand-light">
+                      {dateRanges.map((range) => (
+                        <DropdownMenuItem
+                          key={range}
+                          className={`${selectedDateRange === range ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                          onClick={() => setSelectedDateRange(range)}
+                        >
+                          <span className="flex items-center">
+                            {selectedDateRange === range && (
+                              <Check className="h-4 w-4 mr-2" />
+                            )}
+                            {range}
+                          </span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
 
-          <div className="space-y-2">
-            {/* <Label htmlFor="partner" className="text-brand-black">
-                  Partner
-                </Label> */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
-                {selectedPartner}
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[200px] border-brand-light">
-                {partners.map((partner) => (
-                  <DropdownMenuItem
-                    key={partner}
-                    className={`${selectedPartner === partner ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
-                    onClick={() => setSelectedPartner(partner)}
-                  >
-                    <span className="flex items-center">
-                      {selectedPartner === partner && (
-                        <Check className="h-4 w-4 mr-2" />
-                      )}
-                      {partner}
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">From Date</Label>
+                  <Input
+                    type="datetime-local"
+                    defaultValue="2025-06-24T00:00"
+                    className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                  />
+                </div>
 
-          <div className="space-y-2">
-            {/* <Label htmlFor="partner" className="text-brand-black">
-                  Partner
-                </Label> */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-2 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
-                {fileType}
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-[200px] border-brand-light">
-                {files.map((file) => (
-                  <DropdownMenuItem
-                    key={file}
-                    className={`${fileType === file ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
-                    onClick={() => setFileType(file)}
-                  >
-                    <span className="flex items-center">
-                      {fileType === file && (
-                        <Check className="h-4 w-4 mr-2" />
-                      )}
-                      {file}
-                    </span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">To Date</Label>
+                  <Input
+                    type="datetime-local"
+                    defaultValue="2025-06-24T23:59"
+                    className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                  />
+                </div>
 
-        </div>
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Trading Partner</Label>
+                  <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9 text-left">
+                      <span className="truncate">{getDisplayText()}</span>
+                      <ChevronDown className="w-4 h-4 ml-2 shrink-0" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[280px] border-brand-light p-0"
+                      align="start"
+                      onCloseAutoFocus={(e) => e.preventDefault()}
+                    >
+                      {/* Search and Select All */}
+                      <div className="sticky top-0 bg-white z-10 p-2 border-b border-brand-light">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Checkbox
+                            checked={filteredPartners.length > 0 &&
+                              filteredPartners.every(p => selectedPartners.includes(p.code))}
+                            ref={(el) => {
+                              const inputElement = el as HTMLInputElement;
+                              if (inputElement) {
+                                inputElement.indeterminate = filteredPartners.some(p => selectedPartners.includes(p.code)) &&
+                                  !filteredPartners.every(p => selectedPartners.includes(p.code));
+                              }
+                            }}
+                            onCheckedChange={toggleSelectAll}
+                            className="h-4 w-4"
+                          />
+                          <Input
+                            placeholder="Search partners..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="h-8 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                          />
+                        </div>
+                      </div>
 
-        <div className="grid gap-6 md:grid-cols-4">
+                      {/* Partners List */}
+                      <div className="max-h-[250px] overflow-y-auto">
+                        {filteredPartners.length > 0 ? (
+                          filteredPartners.map((partner) => (
+                            <DropdownMenuItem
+                              key={partner.code}
+                              className="p-0 hover:bg-brand-subtle focus:bg-brand-subtle"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <div
+                                className="flex items-center w-full px-2 py-1.5"
+                                onClick={() => togglePartner(partner.code)}
+                              >
+                                <Checkbox
+                                  checked={selectedPartners.includes(partner.code)}
+                                  className="mr-2 h-4 w-4"
+                                />
+                                <span className="text-sm">
+                                  {partner.name}({partner.code})
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          ))
+                        ) : (
+                          <div className="px-2 py-3 text-center text-sm text-brand-error">
+                            No partners found
+                          </div>
+                        )}
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+              </div>
+
+              {/* Second Row - Document Filters */}
+              <div className="grid grid-cols-4 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">WMS</Label>
+                  <DropdownMenu open={isWmsOpen} onOpenChange={setIsWmsOpen}>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9 text-left">
+                      <span className="truncate">{getWMSDisplayText()}</span>
+                      <ChevronDown className="w-4 h-4 ml-2 shrink-0" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[250px] border-brand-light p-0"
+                      align="start"
+                      onCloseAutoFocus={(e) => e.preventDefault()}
+                    >
+                      {/* Search and Select All */}
+                      <div className="sticky top-0 bg-white z-10 p-2 border-b border-brand-light">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Checkbox
+                            checked={filteredWMS.length > 0 &&
+                              filteredWMS.every(item => selectedWMS.includes(item))}
+                            ref={(el) => {
+                              const inputElement = el as HTMLInputElement;
+                              if (inputElement) {
+                                inputElement.indeterminate = filteredWMS.some(item => selectedWMS.includes(item)) &&
+                                  !filteredWMS.every(item => selectedWMS.includes(item));
+                              }
+                            }}
+                            onCheckedChange={toggleSelectAllWMS}
+                            className="h-4 w-4"
+                          />
+                          <Input
+                            placeholder="Search WMS..."
+                            value={wmsSearchTerm}
+                            onChange={(e) => setWmsSearchTerm(e.target.value)}
+                            className="h-8 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                          />
+                        </div>
+                      </div>
+
+                      {/* WMS List */}
+                      <div className="max-h-[250px] overflow-y-auto">
+                        {filteredWMS.length > 0 ? (
+                          filteredWMS.map((wms) => (
+                            <DropdownMenuItem
+                              key={wms}
+                              className="p-0 hover:bg-brand-subtle focus:bg-brand-subtle"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <div
+                                className="flex items-center w-full px-2 py-1.5"
+                                onClick={() => toggleWMS(wms)}
+                              >
+                                <Checkbox
+                                  checked={selectedWMS.includes(wms)}
+                                  className="mr-2 h-4 w-4"
+                                />
+                                <span className="text-sm">
+                                  {wms}
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          ))
+                        ) : (
+                          <div className="px-2 py-3 text-center text-sm text-brand-error">
+                            No WMS found
+                          </div>
+                        )}
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Document Type</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                      {selectedDocType}
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px] border-brand-light">
+                      <DropdownMenuItem
+                        className={`${selectedDocType === "Select" ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedDocType("Select")}
+                      >
+                        <span className="flex items-center">
+                          {selectedDocType === "Select" && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          Select
+                        </span>
+                      </DropdownMenuItem>
+                      {documentTypes.map((docType) => (
+                        <DropdownMenuItem
+                          key={docType}
+                          className={`${selectedDocType === docType ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                          onClick={() => setSelectedDocType(docType)}
+                        >
+                          <span className="flex items-center">
+                            {selectedDocType === docType && (
+                              <Check className="h-4 w-4 mr-2" />
+                            )}
+                            {docType}
+                          </span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Document #</Label>
+                  <Input
+                    type="text"
+                    placeholder="Enter Document ID"
+                    className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Status</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                      {selectedStatus}
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px] border-brand-light">
+                      <DropdownMenuItem
+                        className={`${selectedStatus === "Select" ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedStatus("Select")}
+                      >
+                        <span className="flex items-center">
+                          {selectedStatus === "Select" && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          Select
+                        </span>
+                      </DropdownMenuItem>
+                      {statusOptions.map((status) => (
+                        <DropdownMenuItem
+                          key={status}
+                          className={`${selectedStatus === status ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                          onClick={() => setSelectedStatus(status)}
+                        >
+                          <span className="flex items-center">
+                            {selectedStatus === status && (
+                              <Check className="h-4 w-4 mr-2" />
+                            )}
+                            {status}
+                          </span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </div>
+
+              {/* Third Row - Status Filters */}
+              <div className="grid grid-cols-4 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">ACK/API Status</Label>
+                  <DropdownMenu open={isApiStatusOpen} onOpenChange={setIsApiStatusOpen}>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9 text-left">
+                      <span className="truncate">{getApiStatusDisplayText()}</span>
+                      <ChevronDown className="w-4 h-4 ml-2 shrink-0" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-[250px] border-brand-light p-0"
+                      align="start"
+                      onCloseAutoFocus={(e) => e.preventDefault()}
+                    >
+                      {/* Search and Select All */}
+                      <div className="sticky top-0 bg-white z-10 p-2 border-b border-brand-light">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Checkbox
+                            checked={filteredApiStatuses.length > 0 &&
+                              filteredApiStatuses.every(item => selectedApiStatuses.includes(item))}
+                            ref={(el) => {
+                              const inputElement = el as HTMLInputElement;
+                              if (inputElement) {
+                                inputElement.indeterminate = filteredApiStatuses.some(item => selectedApiStatuses.includes(item)) &&
+                                  !filteredApiStatuses.every(item => selectedApiStatuses.includes(item));
+                              }
+                            }}
+                            onCheckedChange={toggleSelectAllApiStatuses}
+                            className="h-4 w-4"
+                          />
+                          <Input
+                            placeholder="Search statuses..."
+                            value={apiStatusSearchTerm}
+                            onChange={(e) => setApiStatusSearchTerm(e.target.value)}
+                            className="h-8 text-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Status List */}
+                      <div className="max-h-[250px] overflow-y-auto">
+                        {filteredApiStatuses.length > 0 ? (
+                          filteredApiStatuses.map((status) => (
+                            <DropdownMenuItem
+                              key={status}
+                              className="p-0 hover:bg-brand-subtle focus:bg-brand-subtle"
+                              onSelect={(e) => e.preventDefault()}
+                            >
+                              <div
+                                className="flex items-center w-full px-2 py-1.5"
+                                onClick={() => toggleApiStatus(status)}
+                              >
+                                <Checkbox
+                                  checked={selectedApiStatuses.includes(status)}
+                                  className="mr-2 h-4 w-4"
+                                />
+                                <span className="text-sm">
+                                  {status}
+                                </span>
+                              </div>
+                            </DropdownMenuItem>
+                          ))
+                        ) : (
+                          <div className="px-2 py-3 text-center text-sm text-brand-error">
+                            No statuses found
+                          </div>
+                        )}
+                      </div>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+              </div>
+
+
+              <div className="grid grid-cols-4 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Correlation</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                      {selectedCorrelation}
+                      <ChevronDown className="w-4 h-4 ml-2" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-[200px] border-brand-light">
+                      <DropdownMenuItem
+                        className={`${selectedCorrelation === "Select" ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                        onClick={() => setSelectedCorrelation("Select")}
+                      >
+                        <span className="flex items-center">
+                          {selectedCorrelation === "Select" && (
+                            <Check className="h-4 w-4 mr-2" />
+                          )}
+                          Select
+                        </span>
+                      </DropdownMenuItem>
+                      {correlationOptions.map((option) => (
+                        <DropdownMenuItem
+                          key={option}
+                          className={`${selectedCorrelation === option ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                          onClick={() => setSelectedCorrelation(option)}
+                        >
+                          <span className="flex items-center">
+                            {selectedCorrelation === option && (
+                              <Check className="h-4 w-4 mr-2" />
+                            )}
+                            {option}
+                          </span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <div className="space-y-1">
+                  <Label className="text-brand-black text-sm">Value</Label>
+                  <Input
+                    type="text"
+                    placeholder="Enter search value"
+                    className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                  />
+                </div>
+
+                <div className="flex items-end gap-2">
+                  <Button variant="outline" className="btn-secondary border-brand-light h-9 text-sm">
+                    Add Filter
+                  </Button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-between items-center mt-2">
+
+                <Button className="btn-primary h-9 text-sm">
+                  <Filter className="h-4 w-4 mr-2" />
+                  Apply Filters
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+
+        {/* <div className="grid gap-6 md:grid-cols-4">
           <Card className="brand-card brand-card-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-brand-black">Total Documents</CardTitle>
@@ -271,7 +843,7 @@ export default function DocumentRepository() {
               <p className="text-xs text-brand-muted">This month</p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         <Card className="brand-card">
           <CardHeader className="brand-gradient-primary text-white rounded-t-lg">
@@ -353,6 +925,6 @@ export default function DocumentRepository() {
           </CardContent>
         </Card>
       </div>
-    </SidebarInset>
+    </SidebarInset >
   )
 }
