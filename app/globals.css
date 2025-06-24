@@ -209,6 +209,10 @@
   color: #b7b2b3;
 }
 
+.text-brand-black {
+  color: #232527;
+}
+
 /* Background colors using brand palette */
 .bg-brand-primary {
   background-color: #2368a0;
