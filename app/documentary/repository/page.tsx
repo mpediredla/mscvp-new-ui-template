@@ -192,6 +192,9 @@ const statusOptions = [
   "ERROR"
 ];
 
+const documentsApiData={"data":[{"id":4242,"fileId":"2163332","fileType":"VXML","fileOrigin":null,"transactionType":"846","direction":"OUTBOUND","status":"ERROR","ackStatus":"PENDING","warehouse":"","parentWarehouse":"VIZION","senderId":"SCHWANSGLOBAL","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"SCHWANSGLOBAL","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/24/2025 07:15 ","isaControlNumber":"-","isaDate":null,"isaTime":null,"gsControlNumber":"-","stControlNumber":"-","fileName":"SCHWANSGLOBAL.846.20250527203120.dat","postTransFileName":"-","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"SCHWANSGLOBAL","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"2163334","resubmittedBy":"-"},{"id":4241,"fileId":"2160746","fileType":"XML FILE","fileOrigin":null,"transactionType":"945","direction":"OUTBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"","parentWarehouse":"","senderId":"","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"CTV-430982","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/23/2025 10:54 ","isaControlNumber":"-","isaDate":null,"isaTime":null,"gsControlNumber":"-","stControlNumber":"-","fileName":"945F_12127_AT_250527115816_CTV-430982_ErrorFile.xml","postTransFileName":"-","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"CTV-430982 Id:77274","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4240,"fileId":"2160321","fileType":"FLAT FILE","fileOrigin":null,"transactionType":"945","direction":"OUTBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"Kentile","parentWarehouse":"HJ_Halls","senderId":"311135B2BT","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"9579036","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/23/2025 07:25 ","isaControlNumber":"000000445","isaDate":null,"isaTime":null,"gsControlNumber":"68","stControlNumber":"5625","fileName":"945_250206390006.txt","postTransFileName":"945_W1_MICINC_20250623072529616.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"0086142686 Id:77267","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4239,"fileId":"2160269","fileType":"XML FILE","fileOrigin":null,"transactionType":"947","direction":"OUTBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"ROCHELLE","parentWarehouse":"JDA","senderId":"311135B2BI","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"0581493782080","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/23/2025 07:07 ","isaControlNumber":"000018309","isaDate":null,"isaTime":null,"gsControlNumber":"27199","stControlNumber":"2087","fileName":"947_InvAdj_291942427_20250217132422.txt","postTransFileName":"947_IL-RO-PUB_29248_20250623070729196.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"Lambweston","shipmentId":"00000000000291942427 Id:77262","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4238,"fileId":"2160249","fileType":"FLAT FILE","fileOrigin":null,"transactionType":"944","direction":"OUTBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"NewPort","parentWarehouse":"HJ","senderId":"311135B2BI","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"79504","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/23/2025 07:04 ","isaControlNumber":"000018308","isaDate":null,"isaTime":null,"gsControlNumber":"374","stControlNumber":"0055","fileName":"944_M7_LAMBWESTON_250218233.txt","postTransFileName":"944_M7_LAMBWESTON_20250623070429301.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"Lambweston","shipmentId":"4201322037 Id:77253","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4237,"fileId":"2160219","fileType":"FLAT FILE","fileOrigin":null,"transactionType":"945","direction":"OUTBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"Kentile","parentWarehouse":"HJ_Halls","senderId":"311135B2BT","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"9579036","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/23/2025 06:59 ","isaControlNumber":"000000444","isaDate":null,"isaTime":null,"gsControlNumber":"67","stControlNumber":"5624","fileName":"945_250206390006.txt","postTransFileName":"945_W1_MICINC_20250623065929493.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"0086142686 Id:77244","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4236,"fileId":"2151889","fileType":"JSON","fileOrigin":null,"transactionType":"1117","direction":"INBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"-","parentWarehouse":"JDA","senderId":"02787","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"DCAU2401-8523471-001-20250415","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/20/2025 08:12 ","isaControlNumber":"-","isaDate":null,"isaTime":null,"gsControlNumber":"-","stControlNumber":"-","fileName":"-","postTransFileName":"xmlappointment_ADUSA_2151899_202506200813077676.xml","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"ADUSA","shipmentId":"CS06653142","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4235,"fileId":"2149297","fileType":"EDI","fileOrigin":null,"transactionType":"943","direction":"INBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"-","parentWarehouse":"-","senderId":"91965867437041","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"F 0082427968 20250618 N 4500559478","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/19/2025 10:50 ","isaControlNumber":"000030352","isaDate":null,"isaTime":null,"gsControlNumber":"38668","stControlNumber":"0001","fileName":"Butterball_943_P2_Russelville_EDI","postTransFileName":"POP2149310.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"0082427968 Id:77225","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4234,"fileId":"2149157","fileType":"EDI","fileOrigin":null,"transactionType":"943","direction":"INBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"-","parentWarehouse":"-","senderId":"91965867437041","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"F 0082427968 20250618 N 4500559478","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/19/2025 10:05 ","isaControlNumber":"000030352","isaDate":null,"isaTime":null,"gsControlNumber":"38668","stControlNumber":"0001","fileName":"Butterball_943_P2_Russelville_EDI","postTransFileName":"-","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"-","shipmentId":"0082427968 Id:77216","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"},{"id":4233,"fileId":"2148861","fileType":"EDI","fileOrigin":null,"transactionType":"943","direction":"INBOUND","status":"SUCCESS","ackStatus":"PENDING","warehouse":"AMC Fort Smith","parentWarehouse":"ALPHA","senderId":"91965867437040","receiverId":null,"primaryKeyType":null,"primaryKeyValue":"F 0082426323 20250612 N 4500559056","secondaryKeyType":null,"secondaryKeyValue":null,"dateTimeReceived":"06/19/2025 07:44 ","isaControlNumber":"000037605","isaDate":null,"isaTime":null,"gsControlNumber":"38529","stControlNumber":"0001","fileName":"Butterball_943_Alpha_Fort Smith_EDI_0614","postTransFileName":"FTSM_943_2506190745148873.txt","ackFilePath":null,"orgFilePath":null,"preTransFilePath":null,"postTransFilePath":null,"errorReportFilePath":null,"errorMessage":null,"reProcessStatus":"-","senderName":null,"receiverName":null,"partnerName":"BUTTER-BALL","shipmentId":"0082426323 Id:77208","poNumber":null,"filePath":null,"toAddress":null,"body":null,"subject":null,"errFileId":"-","resubmittedBy":"-"}],"totalRecordsCount":51}
+
+
 export default function DocumentRepository() {
 
   const [selectedPartners, setSelectedPartners] = useState<string[]>([]);
@@ -209,7 +212,8 @@ export default function DocumentRepository() {
   const [isApiStatusOpen, setIsApiStatusOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("Select");
   const [database, setDatabase] = useState("LIVE");
-
+//Mock data for documents
+  const [documentList, setDocumentList] = useState(documentsApiData);
   const [filters, setFilters] = useState([{
     correlation: "Select",
     value: ""
@@ -376,10 +380,10 @@ export default function DocumentRepository() {
         </div>
       </header>
 
-      <div className="flex flex-1 flex-col gap-6 p-6 pt-3 bg-brand-subtle">
+      <div className="flex flex-1 flex-col gap-1 p-6 pt-3 bg-brand-subtle">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-brand-black">Document Repository</h2>
+            <h2 className="text-xl font-bold tracking-tight text-brand-black">Document Repository</h2>
           </div>
           <Button className="btn-primary">
             <Upload className="h-4 w-4 mr-2" />
@@ -922,24 +926,37 @@ export default function DocumentRepository() {
 
 
         <Card className="brand-card">
-          <CardHeader className="brand-gradient-primary text-white rounded-t-lg">
-            <CardTitle className="text-white">Document Library</CardTitle>
-            <CardDescription className="text-brand-light">Browse and manage all uploaded documents</CardDescription>
-          </CardHeader>
+          <div className="flex w-full justify-end mt-6 mb-2">
+                <div className="flex items-center gap-3 ml-[-16px]">
+                  <CardTitle className="text-white text-sm font-medium"></CardTitle>
+                  <Button className="btn-primary h-8 text-xs px-3 text-white text-sm font-medium">
+                  <RotateCcw className="h-4 w-4 mr-1" />
+                  Reprocess
+                  </Button>
+                  <Button className="btn-primary h-8 text-xs px-3 text-white text-sm font-medium">
+                  <FileText className="h-4 w-4 mr-1" />
+                  Lifecycle
+                  </Button>
+                  <Button className="btn-primary h-8 text-xs px-3 text-white text-sm font-medium">
+                  <FileSpreadsheet className="h-4 w-4 mr-1" />
+                  Generate Excel
+                  </Button>
+                </div>
+            </div>
           <CardContent className="pt-6">
             <Table className="table-brand">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-brand-black">Document</TableHead>
-                  <TableHead className="text-brand-black">Category</TableHead>
-                  <TableHead className="text-brand-black">Size</TableHead>
-                  <TableHead className="text-brand-black">Uploaded By</TableHead>
-                  <TableHead className="text-brand-black">Upload Date</TableHead>
-                  <TableHead className="text-right text-brand-black">Downloads</TableHead>
-                  <TableHead className="text-brand-black">Status</TableHead>
-                  <TableHead className="w-[50px]"></TableHead>
-                </TableRow>
-              </TableHeader>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Document</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Category</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Size</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Uploaded By</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Upload Date</TableHead>
+                    <TableHead className="text-right text-[#0d416b] font-bold text-base">Downloads</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Status</TableHead>
+                    <TableHead className="w-[50px]"></TableHead>
+                  </TableRow>
+                </TableHeader>
               <TableBody>
                 {documentsData.map((doc) => (
                   <TableRow key={doc.id} className="hover:bg-brand-subtle">
