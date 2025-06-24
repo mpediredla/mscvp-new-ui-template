@@ -29,6 +29,8 @@ import {
   Check,
   Filter,
   ChevronDown,
+  PlusIcon,
+  RotateCcw,
 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
@@ -42,6 +44,7 @@ import {
 import { Label } from "@/components/ui/label"
 import React, { useState } from "react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const documentsData = [
   {
@@ -200,14 +203,17 @@ export default function DocumentRepository() {
   const [selectedDocType, setSelectedDocType] = useState("Select");
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [statusSearchTerm, setStatusSearchTerm] = useState('');
-  const [isStatusOpen, setIsStatusOpen] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState("Select");
   const [selectedApiStatuses, setSelectedApiStatuses] = useState<string[]>([]);
   const [apiStatusSearchTerm, setApiStatusSearchTerm] = useState('');
   const [isApiStatusOpen, setIsApiStatusOpen] = useState(false);
-  const [selectedCorrelation, setSelectedCorrelation] = useState("Select");
   const [selectedStatus, setSelectedStatus] = useState("Select");
+  const [database, setDatabase] = useState("LIVE");
 
+  const [filters, setFilters] = useState([{
+    correlation: "Select",
+    value: ""
+  }]);
 
   const filteredPartners = partners.filter(partner =>
     partner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -286,32 +292,6 @@ export default function DocumentRepository() {
     status.toLowerCase().includes(statusSearchTerm.toLowerCase())
   );
 
-  // Toggle status selection
-  const toggleStatus = (status: string) => {
-    setSelectedStatuses(prev =>
-      prev.includes(status)
-        ? prev.filter(item => item !== status)
-        : [...prev, status]
-    );
-  };
-
-  // Toggle select all/none for statuses
-  const toggleSelectAllStatuses = () => {
-    if (selectedStatuses.length === filteredStatuses.length) {
-      setSelectedStatuses([]);
-    } else {
-      setSelectedStatuses(prev => [
-        ...new Set([...prev, ...filteredStatuses])
-      ]);
-    }
-  };
-
-  // Display text for status trigger
-  const getStatusDisplayText = () => {
-    if (selectedStatuses.length === 0) return "Select Status";
-    if (selectedStatuses.length === 1) return selectedStatuses[0];
-    return `${selectedStatuses.length} selected`;
-  };
 
   const filteredApiStatuses = apiStatusOptions.filter(status =>
     status.toLowerCase().includes(apiStatusSearchTerm.toLowerCase())
@@ -343,6 +323,36 @@ export default function DocumentRepository() {
     if (selectedApiStatuses.length === 1) return selectedApiStatuses[0];
     return `${selectedApiStatuses.length} selected`;
   };
+
+  const addFilter = () => {
+    if (filters.length < 3) {
+      setFilters([...filters, {
+        correlation: "Select",
+        value: ""
+      }]);
+    }
+  };
+
+  const removeFilter = (index: number) => {
+    if (filters.length > 1) {
+      const newFilters = [...filters];
+      newFilters.splice(index, 1);
+      setFilters(newFilters);
+    }
+  };
+
+  const updateCorrelation = (index: number, value: string) => {
+    const newFilters = [...filters];
+    newFilters[index].correlation = value;
+    setFilters(newFilters);
+  };
+
+  const updateValue = (index: number, value: string) => {
+    const newFilters = [...filters];
+    newFilters[index].value = value;
+    setFilters(newFilters);
+  };
+
 
   return (
     <SidebarInset>
@@ -378,39 +388,68 @@ export default function DocumentRepository() {
         </div>
 
         <Card className="brand-card">
-          <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-3 px-6">
-            <CardTitle className="text-white">Database: @LIVE_ARCHIVE</CardTitle>
+          <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
+            <div className="flex items-center gap-3">
+              <CardTitle className="text-white text-sm font-medium">Database:</CardTitle>
+              <RadioGroup
+                value={database}
+                onValueChange={setDatabase}
+                className="flex items-center gap-3"
+              >
+                <div className="flex items-center space-x-1.5">
+                  <RadioGroupItem value="LIVE" id="r1" />
+                  <label
+                    htmlFor="r1"
+                    className={`text-xs cursor-pointer transition-colors ${database === "LIVE" ? "text-white font-medium" : "text-white/80"
+                      }`}
+                  >
+                    LIVE
+                  </label>
+                </div>
+                <div className="flex items-center space-x-1.5">
+                  <RadioGroupItem value="ARCHIVE" id="r2" />
+                  <label
+                    htmlFor="r2"
+                    className={`text-xs cursor-pointer transition-colors ${database === "ARCHIVE" ? "text-white font-medium" : "text-white/80"
+                      }`}
+                  >
+                    ARCHIVE
+                  </label>
+                </div>
+              </RadioGroup>
+            </div>
           </CardHeader>
           <CardContent className="pt-4">
             <div className="grid gap-3">
               {/* First Row - Date Filters */}
               <div className="grid grid-cols-4 gap-3">
-                <div className="space-y-1">
-                  <Label className="text-brand-black text-sm">Date Range</Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
-                      {selectedDateRange}
-                      <ChevronDown className="w-4 h-4 ml-2" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-[200px] border-brand-light">
-                      {dateRanges.map((range) => (
-                        <DropdownMenuItem
-                          key={range}
-                          className={`${selectedDateRange === range ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
-                          onClick={() => setSelectedDateRange(range)}
-                        >
-                          <span className="flex items-center">
-                            {selectedDateRange === range && (
-                              <Check className="h-4 w-4 mr-2" />
-                            )}
-                            {range}
-                          </span>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-
+                {database === "LIVE" && (
+                  <div className="space-y-1">
+                    <Label className="text-brand-black text-sm">Date Range</Label>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                        {selectedDateRange}
+                        <ChevronDown className="w-4 h-4 ml-2" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-[200px] border-brand-light">
+                        {dateRanges.map((range) => (
+                          <DropdownMenuItem
+                            key={range}
+                            className={`${selectedDateRange === range ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                            onClick={() => setSelectedDateRange(range)}
+                          >
+                            <span className="flex items-center">
+                              {selectedDateRange === range && (
+                                <Check className="h-4 w-4 mr-2" />
+                              )}
+                              {range}
+                            </span>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                )}
                 <div className="space-y-1">
                   <Label className="text-brand-black text-sm">From Date</Label>
                   <Input
@@ -732,7 +771,7 @@ export default function DocumentRepository() {
               </div>
 
 
-              <div className="grid grid-cols-4 gap-3">
+              {/* <div className="grid grid-cols-4 gap-3">
                 <div className="space-y-1">
                   <Label className="text-brand-black text-sm">Correlation</Label>
                   <DropdownMenu>
@@ -784,66 +823,103 @@ export default function DocumentRepository() {
                     Add Filter
                   </Button>
                 </div>
-              </div>
+              </div> */}
 
+              <div className="space-y-3">
+                {filters.map((filter, index) => (
+                  <div key={index} className="grid grid-cols-4 gap-3 items-end">
+                    <div className="space-y-1">
+                      <Label className="text-brand-black text-sm">Correlation</Label>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="flex items-center justify-between w-full px-3 py-1.5 text-sm border border-brand-light rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary h-9">
+                          {filter.correlation}
+                          <ChevronDown className="w-4 h-4 ml-2" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-[200px] border-brand-light">
+                          <DropdownMenuItem
+                            className={`${filter.correlation === "Select" ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                            onClick={() => updateCorrelation(index, "Select")}
+                          >
+                            <span className="flex items-center">
+                              {filter.correlation === "Select" && (
+                                <Check className="h-4 w-4 mr-2" />
+                              )}
+                              Select
+                            </span>
+                          </DropdownMenuItem>
+                          {correlationOptions.map((option) => (
+                            <DropdownMenuItem
+                              key={option}
+                              className={`${filter.correlation === option ? 'bg-brand-accent text-white' : 'hover:bg-brand-subtle'}`}
+                              onClick={() => updateCorrelation(index, option)}
+                            >
+                              <span className="flex items-center">
+                                {filter.correlation === option && (
+                                  <Check className="h-4 w-4 mr-2" />
+                                )}
+                                {option}
+                              </span>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+
+                    <div className="space-y-1">
+                      <Label className="text-brand-black text-sm">Value</Label>
+                      <Input
+                        type="text"
+                        placeholder="Enter search value"
+                        className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                        value={filter.value}
+                        onChange={(e) => updateValue(index, e.target.value)}
+                      />
+                    </div>
+
+                    <div className="flex items-end gap-2">
+                      {index === 0 && filters.length < 3 && (
+                        <Button
+                          variant="outline"
+                          className="btn-secondary border-brand-light h-9 w-9 p-0 flex items-center justify-center"
+                          onClick={addFilter}
+                          aria-label="Add filter"
+                        >
+                          <PlusIcon className="h-4 w-4 text-brand-subtle" />
+                        </Button>
+                      )}
+                      {index > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-9 w-9 text-brand-error hover:bg-brand-error/10"
+                          onClick={() => removeFilter(index)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
               {/* Action Buttons */}
-              <div className="flex justify-between items-center mt-2">
+              <div className="flex  items-center mt-2 gap-2">
 
                 <Button className="btn-primary h-9 text-sm">
                   <Filter className="h-4 w-4 mr-2" />
                   Apply Filters
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-9 text-sm border-brand-light hover:bg-brand-subtle"
+                >
+                  <RotateCcw className="h-4 w-4 mr-2" />
+                  Reset
                 </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
-
-        {/* <div className="grid gap-6 md:grid-cols-4">
-          <Card className="brand-card brand-card-primary">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-brand-black">Total Documents</CardTitle>
-              <FileText className="h-4 w-4 text-brand-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-brand-black">247</div>
-              <p className="text-xs text-brand-muted">+12 this month</p>
-            </CardContent>
-          </Card>
-
-          <Card className="brand-card brand-card-primary">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-brand-black">Categories</CardTitle>
-              <File className="h-4 w-4 text-brand-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-brand-black">8</div>
-              <p className="text-xs text-brand-muted">Active categories</p>
-            </CardContent>
-          </Card>
-
-          <Card className="brand-card brand-card-primary">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-brand-black">Storage Used</CardTitle>
-              <FileSpreadsheet className="h-4 w-4 text-brand-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-brand-black">1.2 GB</div>
-              <p className="text-xs text-brand-muted">of 10 GB limit</p>
-            </CardContent>
-          </Card>
-
-          <Card className="brand-card brand-card-primary">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-brand-black">Downloads</CardTitle>
-              <Download className="h-4 w-4 text-brand-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-brand-black">2,847</div>
-              <p className="text-xs text-brand-muted">This month</p>
-            </CardContent>
-          </Card>
-        </div> */}
 
         <Card className="brand-card">
           <CardHeader className="brand-gradient-primary text-white rounded-t-lg">
