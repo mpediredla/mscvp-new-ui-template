@@ -939,76 +939,43 @@ export default function DocumentRepository() {
             </div>
           </div>
           <CardContent className="pt-6">
-            <Table className="table-brand">
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Document</TableHead>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Category</TableHead>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Size</TableHead>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Uploaded By</TableHead>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Upload Date</TableHead>
-                  <TableHead className="text-right text-[#0d416b] font-bold text-base">Downloads</TableHead>
-                  <TableHead className="text-[#0d416b] font-bold text-base">Status</TableHead>
-                  <TableHead className="w-[50px]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {documentsData.map((doc) => (
+           <Table className="table-brand">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Date Time</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Instance Id</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Document</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">WSM</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Warehouse</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Partner</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Transaction</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">ISACTRL</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Direction</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">File Format</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">ACK Status</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">ReProcess</TableHead>
+                    <TableHead className="text-[#0d416b] font-bold text-base">Resubmitted</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                {documentList.data.map((doc: any) => (
                   <TableRow key={doc.id} className="hover:bg-brand-subtle">
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        {getFileIcon(doc.type)}
-                        <div>
-                          <div className="font-medium text-brand-black">{doc.name}</div>
-                          <div className="text-sm text-brand-muted">{doc.type}</div>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="badge-brand-outline">
-                        {doc.category}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-brand-black">{doc.size}</TableCell>
-                    <TableCell className="text-brand-black">{doc.uploadedBy}</TableCell>
-                    <TableCell className="text-brand-black">{doc.uploadDate}</TableCell>
-                    <TableCell className="text-right text-brand-black">{doc.downloads}</TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={doc.status === "Active" ? "default" : "secondary"}
-                        className={doc.status === "Active" ? "badge-brand-primary" : "badge-brand-secondary"}
-                      >
-                        {doc.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-brand-subtle">
-                            <MoreHorizontal className="h-4 w-4 text-brand-muted" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-white border-brand-light">
-                          <DropdownMenuLabel className="text-brand-black">Actions</DropdownMenuLabel>
-                          <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
-                            <Eye className="mr-2 h-4 w-4" />
-                            Preview
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
-                            <Download className="mr-2 h-4 w-4" />
-                            Download
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator className="bg-brand-light" />
-                          <DropdownMenuItem className="text-brand-error hover:bg-brand-error hover:text-white">
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
+                  <TableCell className="text-brand-black">{doc.dateTimeReceived}</TableCell>
+                  <TableCell className="text-brand-black">{doc.fileId}</TableCell>
+                  <TableCell className="text-brand-black">{doc.senderId}</TableCell>
+                  <TableCell className="text-brand-black">{doc.parentWarehouse}</TableCell>
+                  <TableCell className="text-brand-black">{doc.warehouse}</TableCell>
+                  <TableCell className="text-brand-black">{doc.partnerName}</TableCell>
+                  <TableCell className="text-brand-black">{doc.transactionType}</TableCell>
+                  <TableCell className="text-brand-black">{doc.isaControlNumber}</TableCell>
+                  <TableCell className="text-brand-black">{doc.direction}</TableCell>
+                  <TableCell className="text-brand-black">{doc.fileType}</TableCell>
+                  <TableCell className="text-brand-black">{doc.ackStatus}</TableCell>
+                  <TableCell className="text-brand-black">{doc.reProcessStatus}</TableCell>
+                  <TableCell className="text-brand-black">{doc.resubmittedBy}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
+                </TableBody>
             </Table>
           </CardContent>
           <div className="flex items-center gap-2">
