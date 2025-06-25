@@ -47,9 +47,9 @@ import { usePathname } from "next/navigation"
 
 const data = {
   user: {
-    name: "John Anderson",
-    email: "john.anderson@company.com",
-    avatar: "/placeholder.svg?height=32&width=32",
+    name: "Sai Karthik Nistala",
+    email: "sniatala@miraclesoft.com",
+    avatar: "/ProfileImg.png?height=32&width=32",
     role: "System Administrator",
   },
   navMain: [
@@ -174,8 +174,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     >
                       {item.icon && <item.icon className="currentColor" />}
                       <span className={`font-medium ${item.items.some(subItem => pathname === subItem.url)
-                          ? 'text-brand-primary'
-                          : 'text-brand-black'
+                        ? 'text-brand-primary'
+                        : 'text-brand-black'
                         }`}>
                         {item.title}
                       </span>
@@ -239,18 +239,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
+        <SidebarMenu >
+          <SidebarMenuItem style={{ background: "#f1f3f7" }}>
+            <DropdownMenu >
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
                   className="data-[state=open]:bg-brand-accent data-[state=open]:text-white hover:bg-brand-subtle"
                 >
-                  <Avatar className="h-8 w-8 rounded-lg border-2 border-brand-light">
-                    <AvatarImage src={data.user.avatar || "/placeholder.svg"} alt={data.user.name} />
-                    <AvatarFallback className="bg-brand-primary text-white">JA</AvatarFallback>
-                  </Avatar>
+                  {/* <Avatar className="h-8 w-8 rounded-lg border-2 border-brand-light"> */}
+                    {/* <AvatarImage src={data.user.avatar || "/placeholder.svg"} alt={data.user.name} /> */}
+                    <img
+                      src="/ProfileImg.png"
+                      alt="EDI Portal"
+                      className="h-8 w-auto object-contain"
+                    />
+                    {/* <AvatarFallback className="bg-brand-primary text-white">JA</AvatarFallback> */}
+                  {/* </Avatar> */}
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold text-brand-black">{data.user.name}</span>
                     <span className="truncate text-xs text-brand-muted">{data.user.role}</span>
