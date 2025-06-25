@@ -63,7 +63,7 @@
 
 /* Enhanced components using brand colors only */
 .brand-card {
-  background: #ffffff;
+  background: #f1f1f5;
   border: 1px solid #b7b2b3;
   box-shadow: 0 1px 3px 0 rgba(35, 37, 39, 0.1), 0 1px 2px 0 rgba(35, 37, 39, 0.06);
   transition: all 0.2s ease-in-out;
@@ -71,7 +71,7 @@
 
 .brand-card:hover {
   box-shadow: 0 4px 6px -1px rgba(35, 37, 39, 0.1), 0 2px 4px -1px rgba(35, 37, 39, 0.06);
-  border-color: #00aae7;
+  border-color:#00aae7;
 }
 
 .brand-card-primary {
