@@ -24,6 +24,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useState } from "react"
 import { Label } from "@/components/ui/label"
@@ -94,6 +96,310 @@ const partnersData = [
 ]
 
 
+const partnerList=[
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "Michael Foods",
+      "internalIdentifier": null,
+      "partnerIdentifier": "9268230000T",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "06/24/2025 07:26 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "BUTTER-BALL",
+      "internalIdentifier": null,
+      "partnerIdentifier": "91965867437040",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "04/25/2025 09:42 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "B",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha1@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "BELPASTRY",
+      "internalIdentifier": null,
+      "partnerIdentifier": "5413141999952",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "04/08/2025 06:34 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "BELPASTRY",
+      "internalIdentifier": null,
+      "partnerIdentifier": "5413141999952",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "04/08/2025 06:34 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "BELPASTRY",
+      "internalIdentifier": null,
+      "partnerIdentifier": "5413141999952",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "04/08/2025 06:34 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "BELPASTRY",
+      "internalIdentifier": null,
+      "partnerIdentifier": "5413141999952",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "04/08/2025 06:34 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "MEATI FOODS",
+      "internalIdentifier": null,
+      "partnerIdentifier": "3032000273",
+      "applicationId": null,
+      "countryCode": "USA",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "03/21/2025 07:20 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "123@amc.com",
+        "ediPhoneNumber": "1234567890",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "123@amc.com",
+        "businessPhoneNumber": "1234567890",
+        "dlEmail": "1234@amc.com",
+        "dlPhoneNumber": "1234567890"
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "PIZZA HUT / KFC",
+      "internalIdentifier": null,
+      "partnerIdentifier": "0605100016510",
+      "applicationId": null,
+      "countryCode": "AU",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "02/25/2025 03:52 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "onkar.deshpande@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "onkar.deshpande@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "onkar.deshpande@americold.com",
+        "dlPhoneNumber": "1234"
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "Pizza Hut(BCF00545)",
+      "internalIdentifier": null,
+      "partnerIdentifier": "BCF00545",
+      "applicationId": null,
+      "countryCode": "AU",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "02/20/2025 11:00 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "divya.bucha@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "divya.bucha@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "divya.bucha@americold.com",
+        "dlPhoneNumber": ""
+      }
+    },
+    {
+      "sortField": null,
+      "sortOrder": null,
+      "limit": 0,
+      "offSet": 0,
+      "countFlag": null,
+      "partnerId": null,
+      "partnerName": "WOOLWORTHS (NAN-01907)",
+      "internalIdentifier": null,
+      "partnerIdentifier": "1907",
+      "applicationId": null,
+      "countryCode": "AU",
+      "status": "ACTIVE",
+      "createdBy": "",
+      "createdDate": "02/18/2025 10:23 ",
+      "changedBy": null,
+      "changedDate": null,
+      "pointOfContacts": {
+        "ediContactName": "",
+        "ediTitle": "",
+        "ediEmailId": "onkar.deshpande@americold.com",
+        "ediPhoneNumber": "",
+        "businessContactName": "",
+        "businessTitle": "",
+        "businessEmailId": "onkar.deshpande@americold.com",
+        "businessPhoneNumber": "",
+        "dlEmail": "onkar.deshpande@americold.com",
+        "dlPhoneNumber": ""
+      }
+    }
+  ]
+
+
 const statusOptions = [
   "Active",
   "INACTIVE",
@@ -105,8 +411,10 @@ export default function Partners() {
   const [selectedStatus, setSelectedStatus] = useState("Select");
   const [isAccordianOpen, setIsAccordianOpen] = useState(true);
   const [showTable, setShowTable] = useState(false);
-
   const router = useRouter();
+   const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 8;
+    const totalPages = Math.ceil(partnerList.length / rowsPerPage);
   
   const handleAddPartner = () => {
     router.push('/operations/partners/addPartners'); 
@@ -283,152 +591,150 @@ export default function Partners() {
 
 
         {showTable &&
-          <Card className="brand-card">
-            <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
-              <CardTitle className="text-white text-sm font-medium">Partner Directory</CardTitle>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <Table className="table-brand">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-brand-black">Partner</TableHead>
-                    <TableHead className="text-brand-black">Code</TableHead>
-                    <TableHead className="text-brand-black">Status</TableHead>
-                    <TableHead className="text-brand-black">Integration</TableHead>
-                    <TableHead className="text-brand-black">Last Transaction</TableHead>
-                    <TableHead className="text-right text-brand-black">Total Transactions</TableHead>
-                    <TableHead className="text-right text-brand-black">Success Rate</TableHead>
-                    <TableHead className="text-right text-brand-black">SLA Compliance</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {partnersData.map((partner) => (
-                    <TableRow key={partner.id} className="hover:bg-brand-subtle">
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-8 w-8 border-2 border-brand-light">
-                            <AvatarImage src={`/placeholder.svg?height=32&width=32`} />
-                            <AvatarFallback className="bg-brand-primary text-white">
-                              {partner.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")
-                                .slice(0, 2)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="font-medium text-brand-black">{partner.name}</div>
-                            <div className="text-sm text-brand-muted">{partner.contactEmail}</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-mono text-brand-black">{partner.code}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            partner.status === "Active"
-                              ? "default"
-                              : partner.status === "Warning"
-                                ? "secondary"
-                                : "destructive"
-                          }
-                          className={
-                            partner.status === "Active"
-                              ? "badge-brand-primary"
-                              : partner.status === "Warning"
-                                ? "badge-brand-accent"
-                                : "badge-brand-error"
-                          }
-                        >
-                          {partner.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          variant={
-                            partner.integration === "Connected"
-                              ? "default"
-                              : partner.integration === "Issues"
-                                ? "secondary"
-                                : "destructive"
-                          }
-                          className={
-                            partner.integration === "Connected"
-                              ? "badge-brand-primary"
-                              : partner.integration === "Issues"
-                                ? "badge-brand-accent"
-                                : "badge-brand-error"
-                          }
-                        >
-                          {partner.integration}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-sm text-brand-black">{partner.lastTransaction}</TableCell>
-                      <TableCell className="text-right text-brand-black">
-                        {partner.totalTransactions.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Badge
-                          variant={partner.successRate >= 95 ? "default" : "secondary"}
-                          className={partner.successRate >= 95 ? "badge-brand-primary" : "badge-brand-secondary"}
-                        >
-                          {partner.successRate}%
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Badge
-                          variant={partner.slaCompliance >= 95 ? "default" : "secondary"}
-                          className={partner.slaCompliance >= 95 ? "badge-brand-primary" : "badge-brand-secondary"}
-                        >
-                          {partner.slaCompliance}%
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-brand-subtle">
-                              <MoreHorizontal className="h-4 w-4 text-brand-muted" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white border-brand-light">
-                            <DropdownMenuLabel className="text-brand-black">Actions</DropdownMenuLabel>
-                            <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
-                              <Eye className="mr-2 h-4 w-4" />
-                              View Details
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
-                              <Edit className="mr-2 h-4 w-4" />
-                              Edit Partner
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-brand-light" />
-                            <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
-                              {partner.status === "Active" ? (
-                                <>
-                                  <PowerOff className="mr-2 h-4 w-4" />
-                                  Disable
-                                </>
-                              ) : (
-                                <>
-                                  <Power className="mr-2 h-4 w-4" />
-                                  Enable
-                                </>
-                              )}
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-brand-light" />
-                            <DropdownMenuItem className="text-brand-error hover:bg-brand-error hover:text-white">
-                              <Trash2 className="mr-2 h-4 w-4" />
-                              Delete
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
+          <Card className="brand-card  ">
+          <CardContent className="pt-6">
+            {/* Table for Document List */}
+              <div className="overflow-x-auto rounded-lg border border-brand-light bg-white shadow-sm">
+                {/* Column selection menu */}
+                <Table className="table-brand">
+                  <TableHeader >
+                    <TableRow className="[&>th]:transition-colors [&>th]:duration-150 [&>th]:ease-in hover:[&>th]:bg-brand-subtle">
+                      {/* <TableHead className="w-10 px-3 py-2">
+                        <Checkbox className="rounded border-brand-light" />
+                      </TableHead> */}
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                         Name
+                        </TableHead>
+                      <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Partner Id
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Country
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Status
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                         EDI Email
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          EDI Phone
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Business Email
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                         DL Email
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Created On
+                        </TableHead>
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                          Delete Account
+                        </TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                  </TableHeader>
+                  <TableBody>
+                    {partnerList.slice(
+                        (currentPage - 1) * rowsPerPage,
+                        currentPage * rowsPerPage
+                      )
+                      .map((pat: any, idx: number) => (
+                        <TableRow
+                          key={pat.partnerIdentifier ? pat.partnerIdentifier + '-' + idx : idx}
+                          className={`transition-colors border-b border-[#e5e7eb] ${idx % 2 === 0
+                            ? "bg-[#f1f3f7]"
+                            : "bg-brand-subtle/50"
+                            } hover:bg-[#e9ecef]`}
+                        >
+                          {/* <TableCell className="px-3 py-2">
+                            <Checkbox className="rounded border-brand-light" />
+                          </TableCell> */}
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.partnerName}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.partnerIdentifier}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.countryCode}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.status}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.pointOfContacts.ediEmailId}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.pointOfContacts.ediPhoneNumber? pat.pointOfContacts.ediPhoneNumber:"N/A"}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.pointOfContacts.businessEmailId}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.pointOfContacts.dlEmail}
+                            </TableCell>
+                         
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              {pat.createdDate}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                                <div className="flex justify-center">
+                                <Button
+                                  variant="destructive"
+                                  size="icon"
+                                  className="h-8 w-8 bg-brand-error"
+                                  onClick={() => {
+                                  // Add your delete logic here
+                                  alert(`Delete partner: ${pat.partnerName}`);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                              </div>
+                            </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+                {/* Pagination Controls */}
+                <div className="flex justify-between items-center px-4 py-2 bg-white border-t border-brand-light">
+                  <span className="text-sm text-brand-muted">
+                    Page {currentPage} of {currentPage}
+                  </span>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-2"
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
+                      disabled={currentPage === 1}
+                    >
+                      Prev
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-2"
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      disabled={currentPage === totalPages}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
+                {partnerList.length === 0 && (
+                  <div className="py-8 text-center text-brand-muted text-sm">
+                    No documents found.
+                  </div>
+                )}
+              </div>
+          </CardContent>
+        </Card>
         }
       </div>
       
