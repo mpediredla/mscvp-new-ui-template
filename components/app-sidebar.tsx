@@ -152,7 +152,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-brand-muted">Platform</SidebarGroupLabel>
+          {/* <SidebarGroupLabel className="text-brand-muted">Platform</SidebarGroupLabel> */}
           <SidebarMenu>
             {data.navMain.map((item) => (
               <Collapsible
