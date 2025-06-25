@@ -355,7 +355,7 @@ export default function UserSearch() {
                 <Label className="text-brand-black">&nbsp;</Label>
                 <Button className="w-full btn-primary">
                   <Filter className="h-4 w-4 mr-2" />
-                  Apply Filters
+                  Search
                 </Button>
               </div>
             </div>

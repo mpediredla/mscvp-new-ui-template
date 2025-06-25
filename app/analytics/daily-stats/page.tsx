@@ -218,7 +218,7 @@ export default function DailyStats() {
           <div className="flex items-center gap-2 mt-4">
             <Button className="btn-primary">
               <Filter className="h-4 w-4 mr-2" />
-              Apply Filters
+              Search
             </Button>
             <Button variant="outline" className="btn-secondary border-brand-light">
               Clear Filters

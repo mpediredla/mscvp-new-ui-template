@@ -834,8 +834,8 @@ export default function DocumentRepository() {
                     <label
                       htmlFor="r1"
                       className={`text-xs cursor-pointer transition-colors ${database === "LIVE"
-                          ? "text-white font-medium"
-                          : "text-white/80"
+                        ? "text-white font-medium"
+                        : "text-white/80"
                         }`}
                     >
                       LIVE
@@ -846,8 +846,8 @@ export default function DocumentRepository() {
                     <label
                       htmlFor="r2"
                       className={`text-xs cursor-pointer transition-colors ${database === "ARCHIVE"
-                          ? "text-white font-medium"
-                          : "text-white/80"
+                        ? "text-white font-medium"
+                        : "text-white/80"
                         }`}
                     >
                       ARCHIVE
@@ -889,8 +889,8 @@ export default function DocumentRepository() {
                             <DropdownMenuItem
                               key={range}
                               className={`${selectedDateRange === range
-                                  ? "bg-brand-accent text-white"
-                                  : "hover:bg-brand-subtle"
+                                ? "bg-brand-accent text-white"
+                                : "hover:bg-brand-subtle"
                                 }`}
                               onClick={() => setSelectedDateRange(range)}
                             >
@@ -1101,8 +1101,8 @@ export default function DocumentRepository() {
                       <DropdownMenuContent className="w-[200px] border-brand-light">
                         <DropdownMenuItem
                           className={`${selectedDocType === "Select"
-                              ? "bg-brand-accent text-white"
-                              : "hover:bg-brand-subtle"
+                            ? "bg-brand-accent text-white"
+                            : "hover:bg-brand-subtle"
                             }`}
                           onClick={() => setSelectedDocType("Select")}
                         >
@@ -1117,8 +1117,8 @@ export default function DocumentRepository() {
                           <DropdownMenuItem
                             key={docType}
                             className={`${selectedDocType === docType
-                                ? "bg-brand-accent text-white"
-                                : "hover:bg-brand-subtle"
+                              ? "bg-brand-accent text-white"
+                              : "hover:bg-brand-subtle"
                               }`}
                             onClick={() => setSelectedDocType(docType)}
                           >
@@ -1155,8 +1155,8 @@ export default function DocumentRepository() {
                       <DropdownMenuContent className="w-[200px] border-brand-light">
                         <DropdownMenuItem
                           className={`${selectedStatus === "Select"
-                              ? "bg-brand-accent text-white"
-                              : "hover:bg-brand-subtle"
+                            ? "bg-brand-accent text-white"
+                            : "hover:bg-brand-subtle"
                             }`}
                           onClick={() => setSelectedStatus("Select")}
                         >
@@ -1171,8 +1171,8 @@ export default function DocumentRepository() {
                           <DropdownMenuItem
                             key={status}
                             className={`${selectedStatus === status
-                                ? "bg-brand-accent text-white"
-                                : "hover:bg-brand-subtle"
+                              ? "bg-brand-accent text-white"
+                              : "hover:bg-brand-subtle"
                               }`}
                             onClick={() => setSelectedStatus(status)}
                           >
@@ -1300,8 +1300,8 @@ export default function DocumentRepository() {
                               <DropdownMenuContent className="w-[200px] border-brand-light">
                                 <DropdownMenuItem
                                   className={`${filter.correlation === "Select"
-                                      ? "bg-brand-accent text-white"
-                                      : "hover:bg-brand-subtle"
+                                    ? "bg-brand-accent text-white"
+                                    : "hover:bg-brand-subtle"
                                     }`}
                                   onClick={() =>
                                     updateCorrelation(index, "Select")
@@ -1318,8 +1318,8 @@ export default function DocumentRepository() {
                                   <DropdownMenuItem
                                     key={option}
                                     className={`${filter.correlation === option
-                                        ? "bg-brand-accent text-white"
-                                        : "hover:bg-brand-subtle"
+                                      ? "bg-brand-accent text-white"
+                                      : "hover:bg-brand-subtle"
                                       }`}
                                     onClick={() =>
                                       updateCorrelation(index, option)
@@ -1405,7 +1405,7 @@ export default function DocumentRepository() {
 
                   <Button className="btn-primary h-9 text-sm">
                     <Filter className="h-4 w-4 mr-2" />
-                    Apply Filters
+                    Search
                   </Button>
                   <Button
                     variant="outline"
@@ -1425,39 +1425,39 @@ export default function DocumentRepository() {
             {/* Switch toggle for Cards/Table view */}
             <div className="flex items-center gap-2">
               <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                id="view-toggle"
-                className="sr-only peer"
-                checked={visibleColumns.length === 0}
-                onChange={(e) => {
-                if (e.target.checked) {
-                  setVisibleColumns([]);
-                } else {
-                  setVisibleColumns([
-                  "dateTimeReceived",
-                  "fileId",
-                  "senderId",
-                  "parentWarehouse",
-                  "warehouse",
-                  "partnerName",
-                  "direction",
-                  "transactionType",
-                  "reProcessStatus",
-                  "ackStatus",
-                  ]);
-                }
-                }}
-              />
-              <div className="w-16 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-primary rounded-full peer transition-colors flex items-center justify-between px-2">
-                <IdCard
-                className={`h-5 w-5 transition-all ${visibleColumns.length === 0 ? "text-brand-primary" : "text-gray-400"}`}
+                <input
+                  type="checkbox"
+                  id="view-toggle"
+                  className="sr-only peer"
+                  checked={visibleColumns.length === 0}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setVisibleColumns([]);
+                    } else {
+                      setVisibleColumns([
+                        "dateTimeReceived",
+                        "fileId",
+                        "senderId",
+                        "parentWarehouse",
+                        "warehouse",
+                        "partnerName",
+                        "direction",
+                        "transactionType",
+                        "reProcessStatus",
+                        "ackStatus",
+                      ]);
+                    }
+                  }}
                 />
-                <FileSpreadsheet
-                className={`h-5 w-5 transition-all ${visibleColumns.length !== 0 ? "text-brand-primary" : "text-gray-400"}`}
-                />
-              </div>
-              <span className="sr-only">Toggle view</span>
+                <div className="w-16 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-brand-primary rounded-full peer transition-colors flex items-center justify-between px-2">
+                  <IdCard
+                    className={`h-5 w-5 transition-all ${visibleColumns.length === 0 ? "text-brand-primary" : "text-gray-400"}`}
+                  />
+                  <FileSpreadsheet
+                    className={`h-5 w-5 transition-all ${visibleColumns.length !== 0 ? "text-brand-primary" : "text-gray-400"}`}
+                  />
+                </div>
+                <span className="sr-only">Toggle view</span>
               </label>
             </div>
           </div>
@@ -1487,10 +1487,10 @@ export default function DocumentRepository() {
                         <Badge
                           variant="outline"
                           className={`text-xs px-2 py-0.5 rounded ${doc.status === "SUCCESS"
-                              ? "bg-green-100 text-green-800"
-                              : doc.status === "ERROR"
-                                ? "bg-red-100 text-red-800"
-                                : "bg-yellow-100 text-yellow-800"
+                            ? "bg-green-100 text-green-800"
+                            : doc.status === "ERROR"
+                              ? "bg-red-100 text-red-800"
+                              : "bg-yellow-100 text-yellow-800"
                             }`}
                         >
                           {doc.status}
@@ -1567,10 +1567,10 @@ export default function DocumentRepository() {
                               </span>
                               <span
                                 className={`px-2 py-0.5 rounded text-xs font-medium ${doc.ackStatus === "PENDING"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : doc.ackStatus === "SUCCESS"
-                                      ? "bg-green-100 text-green-800"
-                                      : "bg-red-100 text-red-800"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : doc.ackStatus === "SUCCESS"
+                                    ? "bg-green-100 text-green-800"
+                                    : "bg-red-100 text-red-800"
                                   }`}
                               >
                                 {doc.ackStatus}
@@ -1653,19 +1653,19 @@ export default function DocumentRepository() {
               <div className="overflow-x-auto rounded-lg border border-brand-light bg-white shadow-sm">
                 {/* Column selection menu */}
                 <div className="flex justify-end items-center px-4 py-2 bg-white border-b border-brand-light">
-                    <div className="flex items-center gap-4 flex-1">
+                  <div className="flex items-center gap-4 flex-1">
                     <div className="flex items-center gap-2">
                       <Badge variant="outline" className="text-brand-primary border-brand-primary bg-white">
-                      Active: 3
+                        Active: 3
                       </Badge>
                       <Badge variant="outline" className="text-brand-accent border-brand-accent bg-white">
-                      Warning: 1
+                        Warning: 1
                       </Badge>
                       <Badge variant="outline" className="text-brand-error border-brand-error bg-white">
-                      Inactive: 1
+                        Inactive: 1
                       </Badge>
                     </div>
-                    </div>
+                  </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="h-8 px-2">
@@ -1742,73 +1742,73 @@ export default function DocumentRepository() {
                 </div>
 
                 <Table className="table-brand">
-                  <TableHeader>
+                  <TableHeader >
                     <TableRow className="[&>th]:transition-colors [&>th]:duration-150 [&>th]:ease-in hover:[&>th]:bg-brand-subtle">
                       <TableHead className="w-10 px-3 py-2">
                         <Checkbox className="rounded border-brand-light" />
                       </TableHead>
                       {visibleColumns.includes("dateTimeReceived") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Date Time
                         </TableHead>
                       )}
                       {visibleColumns.includes("fileId") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Instance Id
                         </TableHead>
                       )}
                       {visibleColumns.includes("senderId") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Sender
                         </TableHead>
                       )}
                       {visibleColumns.includes("parentWarehouse") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           WSM
                         </TableHead>
                       )}
                       {visibleColumns.includes("warehouse") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Warehouse
                         </TableHead>
                       )}
                       {visibleColumns.includes("partnerName") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Partner
                         </TableHead>
                       )}
                       {visibleColumns.includes("transactionType") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Transaction
                         </TableHead>
                       )}
                       {visibleColumns.includes("isaControlNumber") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           ISACTRL
                         </TableHead>
                       )}
                       {visibleColumns.includes("direction") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Direction
                         </TableHead>
                       )}
                       {visibleColumns.includes("fileType") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           File Format
                         </TableHead>
                       )}
                       {visibleColumns.includes("ackStatus") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           ACK Status
                         </TableHead>
                       )}
                       {visibleColumns.includes("reProcessStatus") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           ReProcess
                         </TableHead>
                       )}
                       {visibleColumns.includes("resubmittedBy") && (
-                        <TableHead className="text-brand-primary font-semibold text-sm px-3 py-2 whitespace-nowrap">
+                        <TableHead className="text-[#ffffff] font-semibold text-sm px-3 py-2 whitespace-nowrap">
                           Resubmitted
                         </TableHead>
                       )}
@@ -1824,8 +1824,8 @@ export default function DocumentRepository() {
                         <TableRow
                           key={doc.id}
                           className={`transition-colors border-b border-[#e5e7eb] ${idx % 2 === 0
-                              ? "bg-[#f1f3f7]"
-                              : "bg-brand-subtle/50"
+                            ? "bg-[#f1f3f7]"
+                            : "bg-brand-subtle/50"
                             } hover:bg-[#e9ecef]`}
                         >
                           <TableCell className="px-3 py-2">
@@ -1873,7 +1873,12 @@ export default function DocumentRepository() {
                           )}
                           {visibleColumns.includes("direction") && (
                             <TableCell className="px-3 py-2 text-brand-black whitespace-nowrap">
+                              <Badge variant="outline" 
+                              className={
+                                doc.direction === "INBOUND"?"text-brand-accent border-brand-accent bg-white":"text-brand-primary border-brand-primary bg-white"}
+                              >
                               {doc.direction}
+                              </Badge>
                             </TableCell>
                           )}
                           {visibleColumns.includes("fileType") && (
@@ -1888,10 +1893,10 @@ export default function DocumentRepository() {
                             <TableCell className="px-3 py-2 whitespace-nowrap">
                               <span
                                 className={`px-2 py-1 rounded text-xs font-medium ${doc.ackStatus === "PENDING"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : doc.ackStatus === "SUCCESS"
-                                      ? "bg-green-100 text-green-800"
-                                      : "bg-red-100 text-red-800"
+                                  ? "bg-yellow-100 text-yellow-800"
+                                  : doc.ackStatus === "SUCCESS"
+                                    ? "bg-green-100 text-green-800"
+                                    : "bg-red-100 text-red-800"
                                   }`}
                               >
                                 {doc.ackStatus}

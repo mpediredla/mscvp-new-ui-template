@@ -213,6 +213,11 @@
   color: #232527;
 }
 
+.text-brand-subtle {
+  background-color: #ffffff;
+}
+
+
 /* Background colors using brand palette */
 .bg-brand-primary {
   background-color: #2368a0;
@@ -226,7 +231,7 @@
   background-color: #0d416b;
 }
 
-.bg-brand-error {
+.bg-brand-error { 
   background-color: #ef4048;
 }
 
@@ -268,17 +273,19 @@
 
 /* Table enhancements */
 .table-brand thead {
-  background-color: #ffffff;
+  background-color: #2368a0;
   border-bottom: 2px solid #b7b2b3;
+  color: #ffffff;
 }
 
 .table-brand thead tr:hover {
-  background-color: #ffffff;
+  background-color: #2368a0;
+  color: #ffffff;
 }
 
 .table-brand thead th:hover {
   /* background-color: #8c8c8c; */
-  color: #232527;
+  /* color: #232527; */
 }
 
 .table-brand tbody tr:hover {

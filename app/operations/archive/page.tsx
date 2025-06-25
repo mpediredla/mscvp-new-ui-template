@@ -15,24 +15,11 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Switch } from "@/components/ui/switch"
 import {
-  Archive,
-  Trash2,
-  Calendar,
-  HardDrive,
   AlertTriangle,
-  CheckCircle,
-  Clock,
-  Download,
-  Settings,
-  FileText,
-  Shield,
+  ChevronDown,
+  UploadCloud,
 } from "lucide-react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
   Dialog,
   DialogContent,
@@ -42,137 +29,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
-const archiveJobsData = [
-  {
-    id: "ARC-001",
-    name: "Q3 2023 Transaction Archive",
-    type: "Transaction Logs",
-    status: "Completed",
-    startDate: "2024-01-10 02:00:00",
-    endDate: "2024-01-10 04:30:00",
-    recordsProcessed: 2847563,
-    sizeArchived: "12.4 GB",
-    retentionPeriod: "7 years",
-    location: "AWS S3 - Archive Tier",
-    createdBy: "System Scheduler",
-  },
-  {
-    id: "ARC-002",
-    name: "Partner Communication Archive",
-    type: "Communication Logs",
-    status: "In Progress",
-    startDate: "2024-01-15 01:00:00",
-    endDate: null,
-    recordsProcessed: 1245789,
-    sizeArchived: "5.2 GB",
-    retentionPeriod: "5 years",
-    location: "AWS S3 - Archive Tier",
-    createdBy: "John Anderson",
-  },
-  {
-    id: "ARC-003",
-    name: "Error Log Archive - 2023",
-    type: "Error Logs",
-    status: "Scheduled",
-    startDate: "2024-01-20 03:00:00",
-    endDate: null,
-    recordsProcessed: 0,
-    sizeArchived: "0 GB",
-    retentionPeriod: "3 years",
-    location: "AWS S3 - Archive Tier",
-    createdBy: "Sarah Wilson",
-  },
-]
-
-const purgeJobsData = [
-  {
-    id: "PUR-001",
-    name: "Old Debug Logs Purge",
-    type: "Debug Logs",
-    status: "Completed",
-    startDate: "2024-01-12 03:00:00",
-    endDate: "2024-01-12 03:15:00",
-    recordsPurged: 5847291,
-    sizeFreed: "28.7 GB",
-    criteria: "Older than 90 days",
-    approvedBy: "John Anderson",
-  },
-  {
-    id: "PUR-002",
-    name: "Temporary Files Cleanup",
-    type: "Temporary Files",
-    status: "Failed",
-    startDate: "2024-01-14 02:30:00",
-    endDate: "2024-01-14 02:35:00",
-    recordsPurged: 0,
-    sizeFreed: "0 GB",
-    criteria: "Older than 30 days",
-    approvedBy: "Mike Johnson",
-  },
-  {
-    id: "PUR-003",
-    name: "Archived Transaction Purge",
-    type: "Archived Transactions",
-    status: "Pending Approval",
-    startDate: null,
-    endDate: null,
-    recordsPurged: 0,
-    sizeFreed: "0 GB",
-    criteria: "Older than 10 years",
-    approvedBy: null,
-  },
-]
-
-const retentionPolicies = [
-  {
-    id: "POL-001",
-    name: "Transaction Data Retention",
-    dataType: "Transaction Logs",
-    retentionPeriod: "7 years",
-    archiveAfter: "1 year",
-    purgeAfter: "7 years",
-    status: "Active",
-    lastUpdated: "2023-12-15",
-    compliance: "SOX, GDPR",
-  },
-  {
-    id: "POL-002",
-    name: "Communication Log Retention",
-    dataType: "Communication Logs",
-    retentionPeriod: "5 years",
-    archiveAfter: "6 months",
-    purgeAfter: "5 years",
-    status: "Active",
-    lastUpdated: "2023-11-20",
-    compliance: "GDPR, HIPAA",
-  },
-  {
-    id: "POL-003",
-    name: "Error Log Retention",
-    dataType: "Error Logs",
-    retentionPeriod: "3 years",
-    archiveAfter: "3 months",
-    purgeAfter: "3 years",
-    status: "Active",
-    lastUpdated: "2023-10-10",
-    compliance: "Internal Policy",
-  },
-  {
-    id: "POL-004",
-    name: "Debug Log Retention",
-    dataType: "Debug Logs",
-    retentionPeriod: "90 days",
-    archiveAfter: "30 days",
-    purgeAfter: "90 days",
-    status: "Active",
-    lastUpdated: "2024-01-05",
-    compliance: "Internal Policy",
-  },
-]
+import { useState } from "react"
 
 export default function ArchivePurge() {
+
+  const [isAccordianOpen, setIsAccordianOpen] = useState(true); // Default to open
+  const [open, setOpen] = useState(false);
+
+  const handleConfirmReprocess = () => {
+    // Add your reprocess logic here
+    console.log("Reprocessing initiated");
+    setOpen(false);
+  };
+
   return (
     <SidebarInset>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 bg-white border-b border-brand-light">
@@ -193,7 +62,7 @@ export default function ArchivePurge() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-        <div className="ml-auto px-4">
+        {/* <div className="ml-auto px-4">
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="btn-primary border-brand-primary">
               <Download className="h-4 w-4 mr-2" />
@@ -204,29 +73,29 @@ export default function ArchivePurge() {
               Settings
             </Button>
           </div>
-        </div>
+        </div> */}
       </header>
 
-      <div className="flex flex-1 flex-col gap-6 p-6 pt-0 bg-brand-subtle">
-        <div className="flex items-center justify-between">
+      <div className="flex flex-1 flex-col gap-6 p-6 pt-2 bg-brand-subtle">
+        {/* <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold tracking-tight text-brand-black">Archive & Purge Management</h2>
             <p className="text-brand-muted">
               Manage data lifecycle with automated archiving and purging based on retention policies
             </p>
           </div>
-        </div>
+        </div> */}
 
-        <Alert className="alert-brand-info border-brand-accent bg-white">
+        {/* <Alert className="alert-brand-info border-brand-accent bg-white">
           <Shield className="h-4 w-4 text-brand-accent" />
           <AlertTitle className="text-brand-black">Data Lifecycle Management</AlertTitle>
           <AlertDescription className="text-brand-muted">
             All archive and purge operations are logged and require appropriate permissions. Ensure compliance with your
             organization's data retention policies.
           </AlertDescription>
-        </Alert>
+        </Alert> */}
 
-        <div className="grid gap-6 md:grid-cols-4">
+        {/* <div className="grid gap-6 md:grid-cols-4">
           <Card className="brand-card brand-card-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-brand-black">Total Archived</CardTitle>
@@ -270,9 +139,88 @@ export default function ArchivePurge() {
               <p className="text-xs text-brand-muted">All active</p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <Card className="brand-card">
+          <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
+            <div className="flex items-center justify-between"> {/* Changed to justify-between */}
+              <div className="flex items-center gap-3">
+                <CardTitle className="text-white text-sm font-medium">Partners</CardTitle>
+              </div>
+
+              {/* Accordion Toggle Button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10 p-1 rounded-full"
+                onClick={() => setIsAccordianOpen(!isAccordianOpen)} // Add state management
+              >
+                <ChevronDown className={`h-4 w-4 transition-transform ${isAccordianOpen ? "rotate-180" : ""}`} />
+              </Button>
+            </div>
+          </CardHeader>
+          {isAccordianOpen && (
+            <CardContent className="pt-4">
+              <div className="grid gap-3" >
+                <div className="grid grid-cols-4 gap-3">
+
+                  <div className="space-y-1">
+                    <Label className="text-brand-black text-sm">Archive Days</Label>
+                    <Input
+                      type="text"
+                      placeholder="Enter Document ID"
+                      className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                      defaultValue="365"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-brand-black text-sm">Purge Days</Label>
+                    <Input
+                      type="text"
+                      placeholder="Enter Document ID"
+                      className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                      value="365"
+                      disabled
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-brand-black text-sm">Performed By</Label>
+                    <Input
+                      type="text"
+                      placeholder="Enter Document ID"
+                      className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                      value="Web Admin"
+                      disabled
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-brand-black text-sm">System Date</Label>
+                    <Input
+                      type="text"
+                      placeholder="Enter Document ID"
+                      className="border-brand-light focus-brand h-9 py-1.5 text-sm"
+                      value="11/12/2024 18:37"
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="flex  items-center mt-2 gap-2">
+                  <Button className="btn-primary h-9 text-sm"
+                    onClick={() => { setOpen(true) }}
+                  >
+                    <UploadCloud className="h-4 w-4 mr-2" />
+                    Update
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          )}
+        </Card>
+
+
+        {/* <div className="grid gap-6 md:grid-cols-2">
           <Card className="brand-card">
             <CardHeader className="brand-gradient-primary text-white rounded-t-lg">
               <CardTitle className="flex items-center gap-2 text-white">
@@ -467,9 +415,9 @@ export default function ArchivePurge() {
               </Dialog>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
-        <Card className="brand-card">
+        {/* <Card className="brand-card">
           <CardHeader className="brand-gradient-primary text-white rounded-t-lg">
             <CardTitle className="text-white">Archive Jobs</CardTitle>
             <CardDescription className="text-brand-light">Monitor and manage data archiving operations</CardDescription>
@@ -673,8 +621,42 @@ export default function ArchivePurge() {
               </TableBody>
             </Table>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
+
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader className="space-y-7">
+            <DialogTitle className="text-brand-dark">
+              Confirmation
+            </DialogTitle>
+            <div className="flex items-start"> {/* Changed to flex container */}
+              <AlertTriangle className="h-5 w-5 text-brand-warning mr-2 mt-0.5 flex-shrink-0" /> {/* Alert icon */}
+              <DialogDescription className="text-brand-black">
+                Are you sure that you want to reprocess?
+              </DialogDescription>
+            </div>
+          </DialogHeader>
+
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="h-9 text-sm border-brand-light text-brand-dark hover:bg-brand-subtle"
+            >
+              No
+            </Button>
+            <Button
+              onClick={handleConfirmReprocess}
+              className="h-9 text-sm bg-brand-primary hover:bg-brand-primary-dark text-white"
+            >
+              Yes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </SidebarInset>
   )
 }
