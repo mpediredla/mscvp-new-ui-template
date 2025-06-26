@@ -145,7 +145,7 @@ export default function ArchivePurge() {
           <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
             <div className="flex items-center justify-between"> {/* Changed to justify-between */}
               <div className="flex items-center gap-3">
-                <CardTitle className="text-white text-sm font-medium">Partners</CardTitle>
+                <CardTitle className="text-white text-sm font-medium">Archive Purge</CardTitle>
               </div>
 
               {/* Accordion Toggle Button */}
@@ -634,7 +634,7 @@ export default function ArchivePurge() {
             <div className="flex items-start"> {/* Changed to flex container */}
               <AlertTriangle className="h-5 w-5 text-brand-warning mr-2 mt-0.5 flex-shrink-0" /> {/* Alert icon */}
               <DialogDescription className="text-brand-black">
-                Are you sure that you want to reprocess?
+                Are you sure that you want to Update?
               </DialogDescription>
             </div>
           </DialogHeader>

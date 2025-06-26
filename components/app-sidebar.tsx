@@ -43,7 +43,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const data = {
   user: {
@@ -124,8 +125,26 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
+  const [preloadedUrls, setPreloadedUrls] = useState<Set<string>>(new Set())
+  const nav = useRouter();
+  // Function to preload a route
+  const preloadRoute = (url: string) => {
+    if (!preloadedUrls.has(url)) {
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = url
+      document.head.appendChild(link)
+      setPreloadedUrls(prev => new Set(prev).add(url))
+    }
+  }
+
+  const accountHandler = (e: { preventDefault: () => void }) => {
+    e?.preventDefault();
+    nav.push("/MyAccount/account")
+  }
 
   return (
     <Sidebar variant="inset" className="modern-sidebar" {...props}>
@@ -150,9 +169,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
+      {/* <SidebarContent>
         <SidebarGroup>
-          {/* <SidebarGroupLabel className="text-brand-muted">Platform</SidebarGroupLabel> */}
           <SidebarMenu>
             {data.navMain.map((item) => (
               <Collapsible
@@ -235,6 +253,104 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ))}
           </SidebarMenu>
         </SidebarGroup>
+      </SidebarContent> */}
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarMenu>
+            {data.navMain.map((item) => (
+              <Collapsible
+                key={item.title}
+                asChild
+                defaultOpen={item.items.some(subItem => pathname === subItem.url)}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      className={`
+                        hover:bg-brand-subtle/50 
+                        ${item.items.some(subItem => pathname === subItem.url)
+                          ? 'text-brand-primary'
+                          : 'text-brand-muted'}
+                      `}
+                    >
+                      {item.icon && <item.icon className="currentColor" />}
+                      <span className={`font-medium ${item.items.some(subItem => pathname === subItem.url)
+                        ? 'text-brand-primary'
+                        : 'text-brand-black'
+                        }`}>
+                        {item.title}
+                      </span>
+                      {item.items?.length && (
+                        <div className="ml-auto transition-transform duration-300 group-data-[state=open]/collapsible:rotate-90">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            className={`
+                              ${item.items.some(subItem => pathname === subItem.url)
+                                ? 'text-brand-primary'
+                                : 'text-brand-muted'}
+                            `}
+                          >
+                            <path
+                              d="M4.5 3L7.5 6L4.5 9"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {item.items?.map((subItem) => {
+                        // Preload when item comes into view
+                        useEffect(() => {
+                          preloadRoute(subItem.url)
+                        }, [subItem.url])
+
+                        return (
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton
+                              asChild
+                              onMouseEnter={() => preloadRoute(subItem.url)}
+                              className={`
+                                ml-2 rounded-lg transition-all duration-200
+                                ${pathname === subItem.url
+                                  ? "bg-gradient-to-r from-brand-accent/20 to-brand-primary/10 text-brand-primary font-semibold shadow-md border-l-3 border-brand-accent"
+                                  : "hover:bg-brand-subtle/50 hover:text-brand-primary text-brand-black"
+                                }
+                              `}
+                            >
+                              <Link
+                                href={subItem.url}
+                                prefetch={true}
+                                legacyBehavior={false}
+                              >
+                                {subItem.icon && (
+                                  <subItem.icon className="h-4 w-4 mr-2 currentColor" />
+                                )}
+                                <span>{subItem.title}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        )
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
 
 
@@ -247,15 +363,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   size="lg"
                   className="data-[state=open]:bg-brand-accent data-[state=open]:text-white hover:bg-brand-subtle"
                 >
-                  {/* <Avatar className="h-8 w-8 rounded-lg border-2 border-brand-light"> */}
-                    {/* <AvatarImage src={data.user.avatar || "/placeholder.svg"} alt={data.user.name} /> */}
-                    <img
-                      src="/ProfileImg.png"
-                      alt="EDI Portal"
-                      className="h-8 w-auto object-contain"
-                    />
-                    {/* <AvatarFallback className="bg-brand-primary text-white">JA</AvatarFallback> */}
-                  {/* </Avatar> */}
+                  <img
+                    src="/ProfileImg.png"
+                    alt="EDI Portal"
+                    className="h-8 w-auto object-contain"
+                  />
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold text-brand-black">{data.user.name}</span>
                     <span className="truncate text-xs text-brand-muted">{data.user.role}</span>
@@ -281,7 +393,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-brand-light" />
-                <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary">
+                <DropdownMenuItem className="hover:bg-brand-subtle hover:text-brand-primary"
+                  onClick={accountHandler}>
                   <User className="mr-2 h-4 w-4" />
                   Account
                 </DropdownMenuItem>

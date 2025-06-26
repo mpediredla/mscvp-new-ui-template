@@ -606,7 +606,6 @@ export default function DocumentRepository() {
   const [wmsSearchTerm, setWmsSearchTerm] = useState("");
   const [isWmsOpen, setIsWmsOpen] = useState(false);
   const [selectedDocType, setSelectedDocType] = useState("Select");
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [statusSearchTerm, setStatusSearchTerm] = useState("");
   const [selectedDateRange, setSelectedDateRange] = useState("Select");
   const [selectedApiStatuses, setSelectedApiStatuses] = useState<string[]>([]);

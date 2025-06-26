@@ -179,7 +179,7 @@ export default function addPartner() {
 
                 {/* Country Code Contact Section */}
                 <div className="pt-5">
-                  <div className="bg-[#f1f3f7] text-brand-black rounded-t-lg py-1 px-2">EDI Contact</div>
+                  <div className="bg-[#ffffff] text-brand-black rounded-t-lg py-1 px-2">EDI Contact</div>
                   <div className="grid grid-cols-4 gap-3">
                     <div className="space-y-1">
                       <Label className="text-brand-black text-sm">Name</Label>
@@ -218,7 +218,7 @@ export default function addPartner() {
 
                 {/* Business Contact Section */}
                 <div className="pt-5">
-                  <div className="bg-[#f1f3f7] text-brand-black rounded-t-lg py-1 px-2">Business Contact</div>
+                  <div className="bg-[#ffffff] text-brand-black rounded-t-lg py-1 px-2">Business Contact</div>
                   <div className="grid grid-cols-4 gap-3">
                     <div className="space-y-1">
                       <Label className="text-brand-black text-sm">Name</Label>
@@ -257,7 +257,7 @@ export default function addPartner() {
 
                 {/* DL Contact Section */}
                 <div className="pt-5">
-                  <div className="bg-[#f1f3f7] text-brand-black rounded-t-lg py-1 px-2">DL Contact</div>
+                  <div className="bg-[#ffffff] text-brand-black rounded-t-lg py-1 px-2">DL Contact</div>
                   <div className="grid grid-cols-4 gap-3">
                     <div className="space-y-1">
                       <Label className="text-brand-black text-sm">Email Id</Label>

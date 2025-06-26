@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Download, Filter, TrendingUp, TrendingDown, AlertTriangle, ChevronDown, RotateCcw, Check, FileText, FileSpreadsheet } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Line, LineChart } from "recharts"
+import { Bar, BarChart, XAxis, YAxis, ResponsiveContainer, Line, LineChart, PieChart, Pie, Legend, Cell, Tooltip } from "recharts"
 import { Progress } from "@/components/ui/progress"
 import {
   DropdownMenu,
@@ -209,22 +209,29 @@ const apiStatusOptions = [
   "ACCEPTED WITH ERRORS"
 ];
 
-const correlationOptions = [
-  "Cheque Number",
-  "Customer Adjustment Number",
-  "Depositor Order Number",
-  "Direction",
-  "File name",
-  "GS Number"
-];
-
 const statusOptions = [
   "SUCCESS",
   "DROPPED",
   "ERROR"
 ];
 
+const inboundData = [
+  { name: "Inbound", value: 1250 },
+  // { name: "Shipments", value: 980 },
+  // { name: "Receipts", value: 750 },
+];
+
+const outboundData = [
+  { name: "Outbound", value: 1250 },
+  // { name: "Shipments", value: 980 },
+  // { name: "Receipts", value: 750 },
+];
+
+
+
 const documentsApiData = { "data": [{ "id": 4242, "fileId": "2163332", "fileType": "VXML", "fileOrigin": null, "transactionType": "846", "direction": "OUTBOUND", "status": "ERROR", "ackStatus": "PENDING", "warehouse": "", "parentWarehouse": "VIZION", "senderId": "SCHWANSGLOBAL", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "SCHWANSGLOBAL", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/24/2025 07:15 ", "isaControlNumber": "-", "isaDate": null, "isaTime": null, "gsControlNumber": "-", "stControlNumber": "-", "fileName": "SCHWANSGLOBAL.846.20250527203120.dat", "postTransFileName": "-", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "SCHWANSGLOBAL", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "2163334", "resubmittedBy": "-" }, { "id": 4241, "fileId": "2160746", "fileType": "XML FILE", "fileOrigin": null, "transactionType": "945", "direction": "OUTBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "", "parentWarehouse": "", "senderId": "", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "CTV-430982", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/23/2025 10:54 ", "isaControlNumber": "-", "isaDate": null, "isaTime": null, "gsControlNumber": "-", "stControlNumber": "-", "fileName": "945F_12127_AT_250527115816_CTV-430982_ErrorFile.xml", "postTransFileName": "-", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "CTV-430982 Id:77274", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4240, "fileId": "2160321", "fileType": "FLAT FILE", "fileOrigin": null, "transactionType": "945", "direction": "OUTBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "Kentile", "parentWarehouse": "HJ_Halls", "senderId": "311135B2BT", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "9579036", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/23/2025 07:25 ", "isaControlNumber": "000000445", "isaDate": null, "isaTime": null, "gsControlNumber": "68", "stControlNumber": "5625", "fileName": "945_250206390006.txt", "postTransFileName": "945_W1_MICINC_20250623072529616.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "0086142686 Id:77267", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4239, "fileId": "2160269", "fileType": "XML FILE", "fileOrigin": null, "transactionType": "947", "direction": "OUTBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "ROCHELLE", "parentWarehouse": "JDA", "senderId": "311135B2BI", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "0581493782080", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/23/2025 07:07 ", "isaControlNumber": "000018309", "isaDate": null, "isaTime": null, "gsControlNumber": "27199", "stControlNumber": "2087", "fileName": "947_InvAdj_291942427_20250217132422.txt", "postTransFileName": "947_IL-RO-PUB_29248_20250623070729196.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "Lambweston", "shipmentId": "00000000000291942427 Id:77262", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4238, "fileId": "2160249", "fileType": "FLAT FILE", "fileOrigin": null, "transactionType": "944", "direction": "OUTBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "NewPort", "parentWarehouse": "HJ", "senderId": "311135B2BI", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "79504", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/23/2025 07:04 ", "isaControlNumber": "000018308", "isaDate": null, "isaTime": null, "gsControlNumber": "374", "stControlNumber": "0055", "fileName": "944_M7_LAMBWESTON_250218233.txt", "postTransFileName": "944_M7_LAMBWESTON_20250623070429301.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "Lambweston", "shipmentId": "4201322037 Id:77253", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4237, "fileId": "2160219", "fileType": "FLAT FILE", "fileOrigin": null, "transactionType": "945", "direction": "OUTBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "Kentile", "parentWarehouse": "HJ_Halls", "senderId": "311135B2BT", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "9579036", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/23/2025 06:59 ", "isaControlNumber": "000000444", "isaDate": null, "isaTime": null, "gsControlNumber": "67", "stControlNumber": "5624", "fileName": "945_250206390006.txt", "postTransFileName": "945_W1_MICINC_20250623065929493.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "0086142686 Id:77244", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4236, "fileId": "2151889", "fileType": "JSON", "fileOrigin": null, "transactionType": "1117", "direction": "INBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "-", "parentWarehouse": "JDA", "senderId": "02787", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "DCAU2401-8523471-001-20250415", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/20/2025 08:12 ", "isaControlNumber": "-", "isaDate": null, "isaTime": null, "gsControlNumber": "-", "stControlNumber": "-", "fileName": "-", "postTransFileName": "xmlappointment_ADUSA_2151899_202506200813077676.xml", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "ADUSA", "shipmentId": "CS06653142", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4235, "fileId": "2149297", "fileType": "EDI", "fileOrigin": null, "transactionType": "943", "direction": "INBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "-", "parentWarehouse": "-", "senderId": "91965867437041", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "F 0082427968 20250618 N 4500559478", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/19/2025 10:50 ", "isaControlNumber": "000030352", "isaDate": null, "isaTime": null, "gsControlNumber": "38668", "stControlNumber": "0001", "fileName": "Butterball_943_P2_Russelville_EDI", "postTransFileName": "POP2149310.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "0082427968 Id:77225", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4234, "fileId": "2149157", "fileType": "EDI", "fileOrigin": null, "transactionType": "943", "direction": "INBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "-", "parentWarehouse": "-", "senderId": "91965867437041", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "F 0082427968 20250618 N 4500559478", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/19/2025 10:05 ", "isaControlNumber": "000030352", "isaDate": null, "isaTime": null, "gsControlNumber": "38668", "stControlNumber": "0001", "fileName": "Butterball_943_P2_Russelville_EDI", "postTransFileName": "-", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "-", "shipmentId": "0082427968 Id:77216", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }, { "id": 4233, "fileId": "2148861", "fileType": "EDI", "fileOrigin": null, "transactionType": "943", "direction": "INBOUND", "status": "SUCCESS", "ackStatus": "PENDING", "warehouse": "AMC Fort Smith", "parentWarehouse": "ALPHA", "senderId": "91965867437040", "receiverId": null, "primaryKeyType": null, "primaryKeyValue": "F 0082426323 20250612 N 4500559056", "secondaryKeyType": null, "secondaryKeyValue": null, "dateTimeReceived": "06/19/2025 07:44 ", "isaControlNumber": "000037605", "isaDate": null, "isaTime": null, "gsControlNumber": "38529", "stControlNumber": "0001", "fileName": "Butterball_943_Alpha_Fort Smith_EDI_0614", "postTransFileName": "FTSM_943_2506190745148873.txt", "ackFilePath": null, "orgFilePath": null, "preTransFilePath": null, "postTransFilePath": null, "errorReportFilePath": null, "errorMessage": null, "reProcessStatus": "-", "senderName": null, "receiverName": null, "partnerName": "BUTTER-BALL", "shipmentId": "0082426323 Id:77208", "poNumber": null, "filePath": null, "toAddress": null, "body": null, "subject": null, "errFileId": "-", "resubmittedBy": "-" }], "totalRecordsCount": 51 }
+const inboundCOLORS = ["#0d416b"];
+const outboundCOLORS = ["#00aae7"];
 
 
 export default function TPVolumes() {
@@ -811,53 +818,23 @@ export default function TPVolumes() {
 
             {/* Chart Cards */}
             <div className="grid gap-6 md:grid-cols-2">
-              <Card className="brand-card">
+              {/* <Card className="brand-card">
                 <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
                   <CardTitle className="text-white text-sm font-medium">Inbound volumes (0)</CardTitle>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <ChartContainer config={chartConfig} className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={monthlyTrendData}>
+                      <BarChart data={[monthlyTrendData[monthlyTrendData.length - 1]]}>
                         <XAxis dataKey="month" stroke="#8c8c8c" />
                         <YAxis stroke="#8c8c8c" />
                         <ChartTooltip content={<ChartTooltipContent />} />
-                        <Line
-                          type="monotone"
-                          dataKey="walmart"
-                          stroke="#2368a0"
-                          strokeWidth={2}
-                          dot={{ r: 4, fill: "#2368a0" }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="amazon"
-                          stroke="#00aae7"
-                          strokeWidth={2}
-                          dot={{ r: 4, fill: "#00aae7" }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="target"
-                          stroke="#0d416b"
-                          strokeWidth={2}
-                          dot={{ r: 4, fill: "#0d416b" }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="costco"
-                          stroke="#8c8c8c"
-                          strokeWidth={2}
-                          dot={{ r: 4, fill: "#8c8c8c" }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="homedepot"
-                          stroke="#b7b2b3"
-                          strokeWidth={2}
-                          dot={{ r: 4, fill: "#b7b2b3" }}
-                        />
-                      </LineChart>
+                        <Bar dataKey="walmart" fill="#2368a0" />
+                        <Bar dataKey="amazon" fill="#00aae7" />
+                        <Bar dataKey="target" fill="#0d416b" />
+                        <Bar dataKey="costco" fill="#8c8c8c" />
+                        <Bar dataKey="homedepot" fill="#b7b2b3" />
+                      </BarChart>
                     </ResponsiveContainer>
                   </ChartContainer>
                 </CardContent>
@@ -883,7 +860,69 @@ export default function TPVolumes() {
                     </ResponsiveContainer>
                   </ChartContainer>
                 </CardContent>
+              </Card> */}
+
+              <Card className="text-brand-subtle border-[#2368a0] flex-1">
+                <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
+                  <CardTitle className="text-white text-sm font-medium">Inbound volumes (0)</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={inboundData}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        >
+                          {inboundData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={inboundCOLORS[index % inboundCOLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(value: any) => [`${value} transactions`, "Count"]} />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
               </Card>
+
+              <Card className="text-brand-subtle border-[#2368a0] flex-1">
+              <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
+                  <CardTitle className="text-white text-sm font-medium">Outbound volumes (1)</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={outboundData}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        >
+                          {outboundData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={outboundCOLORS[index % outboundCOLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(value: any) => [`${value} transactions`, "Count"]} />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+
             </div>
           </div>
         }

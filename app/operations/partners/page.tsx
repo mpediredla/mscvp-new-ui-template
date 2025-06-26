@@ -412,9 +412,9 @@ export default function Partners() {
   const [isAccordianOpen, setIsAccordianOpen] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const router = useRouter();
-   const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 8;
-    const totalPages = Math.ceil(partnerList.length / rowsPerPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 8;
+  const totalPages = Math.ceil(partnerList.length / rowsPerPage);
   
   const handleAddPartner = () => {
     router.push('/operations/partners/addPartners'); 
