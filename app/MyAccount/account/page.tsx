@@ -31,6 +31,50 @@ const timezones = [
     "Eastern Africa Standard Time",
 ];
 
+interface ProfileCardHeaderProps {
+    title: string;
+    isAccordianOpen: boolean;
+    setIsAccordianOpen: (value: boolean) => void;
+}
+
+const ProfileCardHeader = ({ title, isAccordianOpen, setIsAccordianOpen }: ProfileCardHeaderProps) => (
+    <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
+        <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+                <CardTitle className="text-white text-sm font-medium">{title}</CardTitle>
+            </div>
+            <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10 p-1 rounded-full"
+                onClick={() => setIsAccordianOpen(!isAccordianOpen)}
+            >
+                <ChevronDown className={`h-4 w-4 transition-transform ${isAccordianOpen ? "rotate-180" : ""}`} />
+            </Button>
+        </div>
+    </CardHeader>
+);
+
+const ProfileTabsList = ({ value, onValueChange }: { value: string; onValueChange: (newValue: string) => void }) => (
+    <TabsList className="modern-card p-1 bg-[#2368a0] backdrop-blur-sm border border-brand-light/30">
+        <TabsTrigger
+            value="myAccount"
+            className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
+        >
+            <User className="h-4 w-4 mr-2" />
+            About Me
+        </TabsTrigger>
+        <TabsTrigger
+            value="changePassword"
+            className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
+        >
+            <Lock className="h-4 w-4 mr-2" />
+            Change Password
+        </TabsTrigger>
+    </TabsList>
+);
+
+
 export default function Account() {
 
     const [isAccordianOpen, setIsAccordianOpen] = useState(true);
@@ -40,6 +84,7 @@ export default function Account() {
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    // Filtered timezones would be implemented here
     const filteredTimezones = timezones.filter(timezone =>
         timezone.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -84,147 +129,20 @@ export default function Account() {
 
             <div className="flex flex-1 flex-col gap-6 p-6 pt-2 bg-brand-subtle">
 
-                {/* <Card className="brand-card">
-                    <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <CardTitle className="text-white text-sm font-medium">Partners</CardTitle>
-                            </div>
 
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-white hover:bg-white/10 p-1 rounded-full"
-                                onClick={() => setIsAccordianOpen(!isAccordianOpen)} // Add state management
-                            >
-                                <ChevronDown className={`h-4 w-4 transition-transform ${isAccordianOpen ? "rotate-180" : ""}`} />
-                            </Button>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4 pt-6">
-                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="firstName" className="text-brand-black text-sm">
-                                    First Name
-                                </Label>
-                                <Input id="firstName" placeholder="John" className="border-brand-light focus-brand text-sm" />
-                            </div>
-
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="lastName" className="text-brand-black text-sm">
-                                    Last Name
-                                </Label>
-                                <Input id="lastName" placeholder="Doe" className="border-brand-light focus-brand text-sm" />
-                            </div>
-
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="email" className="text-brand-black text-sm">
-                                    Email
-                                </Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="john.doe@company.com"
-                                    className="border-brand-light focus-brand text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="phone" className="text-brand-black text-sm">
-                                    Phone
-                                </Label>
-                                <Input
-                                    id="phone"
-                                    type="tel"
-                                    placeholder="+1 (555) 123-4567"
-                                    className="border-brand-light focus-brand text-sm"
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="department" className="text-brand-black text-sm">
-                                    Department
-                                </Label>
-                                <Select>
-                                    <SelectTrigger className="border-brand-light focus-brand text-sm h-9">
-                                        <SelectValue placeholder="Select" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-white border-brand-light">
-                                        <SelectItem value="it" className="text-sm">IT</SelectItem>
-                                        <SelectItem value="operations" className="text-sm">Operations</SelectItem>
-                                        <SelectItem value="finance" className="text-sm">Finance</SelectItem>
-                                        <SelectItem value="logistics" className="text-sm">Logistics</SelectItem>
-                                        <SelectItem value="procurement" className="text-sm">Procurement</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="grid grid-cols-[100px_1fr] items-center gap-1">
-                                <Label htmlFor="jobTitle" className="text-brand-black text-sm">
-                                    Job Title
-                                </Label>
-                                <Input id="jobTitle" placeholder="EDI Analyst" className="border-brand-light focus-brand text-sm" />
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card> */}
-
-                <Tabs defaultValue="overview" className="space-y-6" >
-                    {/* <TabsList className="modern-card p-1 bg-[#2368a0] backdrop-blur-sm border border-brand-light/30">
-                        <TabsTrigger
-                            value="overview"
-                            className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                        >
-                            <User className="h-4 w-4 mr-2" />
-                            About Me
-                        </TabsTrigger>
-                        <TabsTrigger
-                            value="performance"
-                            className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                        >
-                            <Lock className="h-4 w-4 mr-2" />
-                            Change Password
-                        </TabsTrigger>
-                    </TabsList> */}
-
-                    <TabsContent value="overview" className="space-y-6"  >
+                <Tabs defaultValue="myAccount" className="space-y-6">
+                    <TabsContent value="myAccount" className="space-y-6">
                         <Card className="modern-card">
+                            <ProfileCardHeader
+                                title="Profile"
+                                isAccordianOpen={isAccordianOpen}
+                                setIsAccordianOpen={setIsAccordianOpen}
+                            />
 
-                            <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <CardTitle className="text-white text-sm font-medium">Profile</CardTitle>
-                                    </div>
-
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="text-white hover:bg-white/10 p-1 rounded-full"
-                                        onClick={() => setIsAccordianOpen(!isAccordianOpen)} // Add state management
-                                    >
-                                        <ChevronDown className={`h-4 w-4 transition-transform ${isAccordianOpen ? "rotate-180" : ""}`} />
-                                    </Button>
-                                </div>
-                            </CardHeader>
-
-                            <TabsList className="modern-card p-1 bg-[#2368a0] backdrop-blur-sm border border-brand-light/30">
-                                <TabsTrigger
-                                    value="overview"
-                                    className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                                >
-                                    <User className="h-4 w-4 mr-2" />
-                                    About Me
-                                </TabsTrigger>
-                                <TabsTrigger
-                                    value="performance"
-                                    className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                                >
-                                    <Lock className="h-4 w-4 mr-2" />
-                                    Change Password
-                                </TabsTrigger>
-                            </TabsList>
+                            <ProfileTabsList 
+                                value="myAccount" 
+                                onValueChange={(newValue: any) => console.log(newValue)} 
+                            />
 
                             <CardContent className="space-y-4 pt-6">
                                 {/* First Row - First Name, Last Name, Email */}
@@ -254,13 +172,10 @@ export default function Account() {
                                         </Label>
                                         <Input id="lastName" placeholder="Doe" className="border-brand-light focus-brand text-sm" />
                                     </div>
-
-
                                 </div>
 
                                 {/* Second Row - Phone, Department, Job Title */}
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-
                                     <div className="grid grid-cols-[100px_1fr] items-center gap-1">
                                         <Label htmlFor="jobTitle" className="text-brand-black text-sm">
                                             Location
@@ -297,7 +212,6 @@ export default function Account() {
                                                 <ChevronDown className="w-4 h-4 ml-2 shrink-0" />
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent className="w-[200px] border-brand-light p-0">
-                                                {/* Search Input */}
                                                 <div className="sticky top-0 z-10 bg-white p-2 border-b border-brand-light">
                                                     <Input
                                                         placeholder="Search timezones..."
@@ -307,7 +221,6 @@ export default function Account() {
                                                     />
                                                 </div>
 
-                                                {/* Filtered Timezone List */}
                                                 <div className="max-h-[200px] overflow-y-auto">
                                                     {filteredTimezones.length > 0 ? (
                                                         <>
@@ -347,10 +260,8 @@ export default function Account() {
                                         </DropdownMenu>
                                     </div>
 
-                                    <div className="flex  items-center mt-2 gap-2">
-                                        <Button className="btn-primary h-9 text-sm"
-                                        // onClick={() => { setOpen(true) }}
-                                        >
+                                    <div className="flex items-center mt-2 gap-2">
+                                        <Button className="btn-primary h-9 text-sm">
                                             <UploadCloud className="h-4 w-4 mr-2" />
                                             Update
                                         </Button>
@@ -358,44 +269,20 @@ export default function Account() {
                                 </div>
                             </CardContent>
                         </Card>
-
                     </TabsContent>
 
-                    <TabsContent value="performance" className="space-y-6 ">
+                    <TabsContent value="changePassword" className="space-y-6">
                         <Card className="modern-card">
-                            <CardHeader className="brand-gradient-primary text-white rounded-t-lg py-2 px-4">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <CardTitle className="text-white text-sm font-medium">Profile</CardTitle>
-                                    </div>
+                            <ProfileCardHeader
+                                title="Profile"
+                                isAccordianOpen={isAccordianOpen}
+                                setIsAccordianOpen={setIsAccordianOpen}
+                            />
 
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="text-white hover:bg-white/10 p-1 rounded-full"
-                                        onClick={() => setIsAccordianOpen(!isAccordianOpen)} // Add state management
-                                    >
-                                        <ChevronDown className={`h-4 w-4 transition-transform ${isAccordianOpen ? "rotate-180" : ""}`} />
-                                    </Button>
-                                </div>
-                            </CardHeader>
-
-                            <TabsList className="modern-card p-1 bg-[#2368a0] backdrop-blur-sm border border-brand-light/30">
-                                <TabsTrigger
-                                    value="overview"
-                                    className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                                >
-                                    <User className="h-4 w-4 mr-2" />
-                                    About Me
-                                </TabsTrigger>
-                                <TabsTrigger
-                                    value="performance"
-                                    className="data-[state=active]:bg-[#2368a0] data-[state=active]:from-brand-primary data-[state=active]:to-brand-accent data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300"
-                                >
-                                    <Lock className="h-4 w-4 mr-2" />
-                                    Change Password
-                                </TabsTrigger>
-                            </TabsList>
+                            <ProfileTabsList 
+                                value="myAccount" 
+                                onValueChange={(newValue: any) => console.log(newValue)} 
+                            />
 
                             <CardContent className="space-y-4 pt-6">
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -463,7 +350,6 @@ export default function Account() {
                                                 {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                             </button>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div className="flex justify-end items-center mt-2 gap-2">
@@ -472,11 +358,9 @@ export default function Account() {
                                         Update
                                     </Button>
                                 </div>
-
                             </CardContent>
                         </Card>
                     </TabsContent>
-
                 </Tabs>
 
             </div>
